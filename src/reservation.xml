@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<reservation-list>
+    
+    <reservation>
+        <animal>
+            <identifier internal="pms01">940000123321456</identifier>
+            <species>pes</species>
+            <breed>mops</breed>
+            <sex>samec</sex>
+            <age>1</age>
+            <name>Gyros</name>
+            <medical condition="false">
+                <weight unit="kg">10.3</weight>
+                <notes>
+                    <p>Zdravý, váha v normě, bez problémů, seklina do duhovky dex. oka zhojena</p>
+                </notes>
+                <medication activeUse="false" />
+            </medical>
+        </animal>
+        <owner>
+            <email>jarka@seznam.cz</email>
+            <name>Jaroslava Kaňková</name>
+            <address>
+                <street>Linecká</street>
+                <streetNum>7/2144</streetNum>
+                <city>Český Krumlov</city>
+                <zip>38101</zip>
+                <country>Czechia</country>
+            </address>
+            <tel>+420720449229</tel>
+        </owner>
+        <appointment>
+            <examination>Preventivní prohlídka a odčervení</examination>
+            <day>20.12.2019</day>
+            <time>???timestamp???</time>
+            <duration unit="min">15</duration>
+        </appointment>
+    </reservation>
+    
+    <reservation>
+        <animal>
+            <identifier internal="kpm01"></identifier>
+            <species>kočka</species>
+            <breed>Perská kočka</breed>
+            <sex>samice</sex>
+            <age>4</age>
+            <name>Micka</name>
+            <medical condition="true">
+                <weight unit="kg">6.3</weight>
+                <notes>
+                    <p>Březí 4 týdny, luxace pately z. dex. končetina, pohyb zvládá</p>
+                </notes>
+                <medication activeUse="true">
+                    <active-ingredient>diclofenaceum natricum</active-ingredient>
+                    <manufacturer>Zentiva</manufacturer>
+                    <dose unit="mg">25</dose>
+                </medication>
+            </medical>
+        </animal>
+        <owner>
+            <email>kolar.jan@centrum.cz</email>
+            <name>Jan Kolář</name>
+            <address>
+                <street>Krajinská</street>
+                <streetNum>270/30</streetNum>
+                <city>České Budějovice</city>
+                <zip>37001</zip>
+                <country>Czechia</country>
+            </address>
+            <tel>+420777322229</tel>
+        </owner>
+        <appointment>
+            <disease>Podezření na toxoplazmu</disease>
+            <day>20.12.2019</day>
+            <time>???timestamp???</time>
+            <duration unit="min">30</duration>
+        </appointment>
+    </reservation>
+    
+</reservation-list>
