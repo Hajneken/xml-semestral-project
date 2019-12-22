@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:h="http://www.w3.org/1999/xhtml"
+    targetNamespace="urn:x-zemanec:schemas:reservation:1.0"
+    xmlns="urn:x-zemanec:schemas:reservation:1.0" elementFormDefault="qualified">
+
+    <!--    qualified indicates that any elements used by the XML instance document which were declared in this schema must be namespace qualified.-->
+
+    <xs:element name="reservation-list" type="reservationListType"/>
+
+    <xs:complexType name="reservationListType">
+        <xs:sequence>
+            <xs:element name="reservation" type="reservation" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="reservation">
+        <xs:sequence>
+            <xs:element name="animal" type="animalType" maxOccurs="unbounded"/>
+            <xs:element name="owner" type="ownerType"/>
+            <xs:element name="appointment" type="appointmentType"/>
+        </xs:sequence>
+        <xs:attribute name="day" type="dayType"/>
+    </xs:complexType>
+
+    <xs:complexType name="animalType">
+        <xs:sequence>
+            <xs:element name="identifier" type="identifierType" nillable="true"/>
+            <xs:element name="species" type="speciesType"/>
+            <xs:element name="breed" type="breedType"/>
+            <xs:element name="sex" type="sexType"/>
+            <xs:element name="age" type="ageType"/>
+            <xs:element name="name" type="nameType"/>
+            <xs:element name="medical" type="medicalType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="identifierType">
+        <!--        when defining content of an element with attribute use the following structure -->
+        
+        <xs:simpleContent>
+            <xs:extension base="chipNumberType">
+                <xs:attribute name="internal" type="internalType" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+        
+    </xs:complexType>
+
+    <xs:simpleType name="chipNumberType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(\d{15}|\d{0})"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--        TODO check for internal -->
+    <xs:simpleType name="internalType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="dayType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="mon"/>
+            <xs:enumeration value="tue"/>
+            <xs:enumeration value="wed"/>
+            <xs:enumeration value="thu"/>
+            <xs:enumeration value="fri"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="speciesType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="3"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="breedType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="3"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="sexType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="samice"/>
+            <xs:enumeration value="samec"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ageType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <!--   in case of old turtles -->
+            <xs:maxExclusive value="200"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--            TODO regex -->
+    <xs:simpleType name="nameType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="medicalType">
+        <xs:sequence>
+            <xs:element name="weight" type="weightType"/>
+            <xs:element name="notes" type="notesType"/>
+            <xs:element name="medication" type="medicationType" minOccurs="0" maxOccurs="unbounded" 
+            />
+        </xs:sequence>
+        <xs:attribute name="condition" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="weightType">
+        <xs:simpleContent>
+            <xs:extension base="weightRestrictionType">
+                <xs:attribute name="unit" type="weightUnitType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="weightUnitType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="kg"/>
+            <xs:enumeration value="g"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="weightRestrictionType">
+        <xs:restriction base="xs:float">
+            <xs:minExclusive value="0"/>
+            <xs:maxExclusive value="120"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="notesType">
+        <xs:choice>
+            <xs:element name="p" type="paragraphType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:any namespace="http://www.w3.org/1999/xhtml" minOccurs="0" maxOccurs="unbounded"
+                processContents="lax"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:simpleType name="paragraphType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="500"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="medicationType">
+        <xs:sequence>
+            <xs:element name="active-ingredient" type="xs:string" minOccurs="1"
+                maxOccurs="unbounded"/>
+            <xs:element name="manufacturer" type="xs:string"/>
+            <xs:element name="dose" type="doseType" />
+        </xs:sequence>
+        <xs:attribute name="active-use" type="xs:boolean"/>
+    </xs:complexType>
+    
+    <xs:complexType name="doseType">
+        <xs:simpleContent>
+            <xs:extension base="doseAmountType">
+                <xs:attribute name="unit" type="doseUnitType"></xs:attribute>
+            </xs:extension>
+            
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:simpleType name="doseAmountType">
+        <xs:restriction base="xs:float">
+            <xs:minExclusive value="0" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="doseUnitType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ml" />
+            <xs:enumeration value="mg" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ownerType">
+        <xs:sequence>
+            <xs:element name="email" type="emailType" />
+            <xs:element name="name" type="ownerNameType" />
+            <xs:element name="address" type="addressType" />
+            <xs:element name="tel" type="telType"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    
+
+
+</xs:schema>
