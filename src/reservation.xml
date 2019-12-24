@@ -24,26 +24,20 @@
         <owner>
             <!--            (?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])-->
             <email>jarka@seznam.cz</email>
-            <!--            /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u-->
             <name>Jaroslava Kaňková</name>
             <address>
-                <!--                string -->
                 <street>Linecká</street> <streetNum>7/2144</streetNum>
-                <!--                string -->
                 <city>Český Krumlov</city>
-                <!--                \d{5}-->
                 <zip>38101</zip>
-                <!--                string-->
                 <country>Czechia</country>
             </address>
             <!--            ^[+]?[()/0-9. -]{9,}$   -->
-            <tel>+420720449229</tel>
+            <tel>+42072049229</tel>
         </owner>
-        <appointment>
+        <appointment priority="normální">
             <examination>Preventivní prohlídka a odčervení</examination>
-            <!--YYYY-MM-DD-->
             <day>2019-12-20</day>
-            <time>9:30:00</time>
+            <time>09:30:00</time>
             <duration unit="min">15</duration>
         </appointment>
     </reservation>
@@ -79,9 +73,9 @@
             </address>
             <tel>+420777322229</tel>
         </owner>
-        <appointment>
+        <appointment priority="vysoká">
             <disease>Podezření na toxoplazmu</disease>
-            <day>20.12.2019</day>
+            <day>2019-12-20</day>
             <time>11:00:00</time>
             <duration unit="min">30</duration>
         </appointment>

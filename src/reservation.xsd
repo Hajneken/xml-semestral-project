@@ -10,7 +10,7 @@
 
     <xs:complexType name="reservationListType">
         <xs:sequence>
-            <xs:element name="reservation" type="reservation" maxOccurs="unbounded"/>
+            <xs:element name="reservation" type="reservation" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -36,14 +36,11 @@
     </xs:complexType>
 
     <xs:complexType name="identifierType">
-        <!--        when defining content of an element with attribute use the following structure -->
-        
         <xs:simpleContent>
             <xs:extension base="chipNumberType">
                 <xs:attribute name="internal" type="internalType" use="required"/>
             </xs:extension>
         </xs:simpleContent>
-        
     </xs:complexType>
 
     <xs:simpleType name="chipNumberType">
@@ -52,9 +49,10 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <!--        TODO check for internal -->
     <xs:simpleType name="internalType">
-        <xs:restriction base="xs:string"/>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-z]{4}\d{2}"/>
+        </xs:restriction>
     </xs:simpleType>
 
     <xs:simpleType name="dayType">
@@ -96,7 +94,6 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <!--            TODO regex -->
     <xs:simpleType name="nameType">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
@@ -108,7 +105,7 @@
         <xs:sequence>
             <xs:element name="weight" type="weightType"/>
             <xs:element name="notes" type="notesType"/>
-            <xs:element name="medication" type="medicationType" minOccurs="0" maxOccurs="unbounded" 
+            <xs:element name="medication" type="medicationType" minOccurs="0" maxOccurs="unbounded"
             />
         </xs:sequence>
         <xs:attribute name="condition" type="xs:boolean"/>
@@ -156,43 +153,145 @@
             <xs:element name="active-ingredient" type="xs:string" minOccurs="1"
                 maxOccurs="unbounded"/>
             <xs:element name="manufacturer" type="xs:string"/>
-            <xs:element name="dose" type="doseType" />
+            <xs:element name="dose" type="doseType"/>
         </xs:sequence>
         <xs:attribute name="active-use" type="xs:boolean"/>
     </xs:complexType>
-    
+
     <xs:complexType name="doseType">
         <xs:simpleContent>
             <xs:extension base="doseAmountType">
-                <xs:attribute name="unit" type="doseUnitType"></xs:attribute>
+                <xs:attribute name="unit" type="doseUnitType"/>
             </xs:extension>
-            
+
         </xs:simpleContent>
     </xs:complexType>
-    
+
     <xs:simpleType name="doseAmountType">
         <xs:restriction base="xs:float">
-            <xs:minExclusive value="0" />
+            <xs:minExclusive value="0"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="doseUnitType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="ml" />
-            <xs:enumeration value="mg" />
+            <xs:enumeration value="ml"/>
+            <xs:enumeration value="mg"/>
         </xs:restriction>
     </xs:simpleType>
 
     <xs:complexType name="ownerType">
         <xs:sequence>
-            <xs:element name="email" type="emailType" />
-            <xs:element name="name" type="ownerNameType" />
-            <xs:element name="address" type="addressType" />
-            <xs:element name="tel" type="telType"></xs:element>
+            <xs:element name="email" type="emailType"/>
+            <xs:element name="name" type="ownerNameType"/>
+            <xs:element name="address" type="addressType"/>
+            <xs:element name="tel" type="telType"/>
         </xs:sequence>
     </xs:complexType>
-    
-    
 
+    <xs:simpleType name="emailType">
+        <xs:restriction base="xs:string">
+            <!--            <xs:pattern value="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" />-->
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ownerNameType">
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                value="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčřšžňÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+            />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="addressType">
+        <xs:sequence>
+            <xs:element name="street" type="streetType"/>
+            <xs:element name="streetNum" type="streetNumType"/>
+            <xs:element name="city" type="streetType"/>
+            <xs:element name="zip" type="zipType"/>
+            <xs:element name="country" type="streetType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="streetType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <xs:maxLength value="50"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="streetNumType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{0,}(\/)?\d{0,}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="telType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(\+\d{1,3})\d{8,}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="zipType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="appointmentType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:element name="examination" type="xs:string"/>
+                <xs:element name="disease" type="xs:string"/>
+                <xs:element name="injury" type="xs:string"/>
+                <xs:element name="surgery" type="surgeryType"/>
+                <xs:element name="other" type="xs:string"/>
+            </xs:choice>
+            <xs:element name="day" type="xs:date"/>
+            <xs:element name="time" type="xs:time"/>
+            <xs:element name="duration" type="durationType"/>
+        </xs:sequence>
+        <xs:attribute name="priority" type="priorityType" />
+    </xs:complexType>
+    
+    <xs:simpleType name="priorityType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="vysoká" />
+            <xs:enumeration value="normální" />
+            <xs:enumeration value="nízká" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="surgeryType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="difficulty" type="surgeryDifficultyType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="surgeryDifficultyType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="rozsáhlý"/>
+            <xs:enumeration value="střední"/>
+            <xs:enumeration value="drobný"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="durationType">
+        <xs:simpleContent>
+            <xs:extension base="xs:int">
+                <xs:attribute name="unit" type="timeUnitType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="timeUnitType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="min"/>
+            <xs:enumeration value="hod"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>
