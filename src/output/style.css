@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
+*{
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+body{
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: rgba(26, 64, 145, 0.267);
+}
+
+h1{text-align: center;}
+
+h2{
+    position: relative;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+}
+
+nav > *{
+    padding: 10px;
+}
+
+h2::after{
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.226);
+    bottom: -0.7rem;
+    left: 0px;
+    border-radius: 10px;
+}
+
+th{
+    font-size: 1.1rem;
+    text-align: left;
+    position: relative;
+}
+
+td{
+    font-size: 1rem;
+}
+
+th, td{
+    padding: 5px;
+    max-width: 130px;
+}
+
+table{
+    width: 100%;
+    position: relative;
+    padding: 10px;
+    border-spacing: 0px;
+}
+
+th::after{
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.082);
+        
+}
+
+.notes{
+    background: rgba(0, 0, 0, 0.082);
+}
+
+p.notes{
+    padding: 15px;
+}
+
+.box{
+    margin-bottom: 40px;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.15);
+    padding: 15px 25px; 
+    position: relative;
+}
+
+.box:not(:last-child)::after{
+    content: "";
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 5px;
+    border-radius: 10px;
+    background: rgb(255, 255, 255);
+}
+
+.priority{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    color: white;
+    background: black;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+.box::after{
+    position: absolute;
+    content: "";
+}
+
+.owner{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.owner > *{
+    padding: 0 10px;
+    position: relative;
+}
+
+.name{
+    color: black;
+    font-weight: bold;
+    transition: all 0.15s ease-in-out;
+}
+
+.name:hover{
+    text-shadow: 1px 0px rgba(0, 0, 0, 0.767);
+    transition: all 0.15s ease-in-out;
+}
+
+.tel, .mail{
+    color: rgba(0, 0, 0, 0.753);
+}
+
+.tel::before{
+    content: "tel: ";
+    color: black;
+}
+
+.mail::before{
+    content: 'email: ';
+    color: black;
+}
+
+.medication::before{
+    content: "Léky: ";
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.7);
+}
+

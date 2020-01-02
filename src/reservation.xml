@@ -2,7 +2,10 @@
 
 <!--indicates that any elements used by the XML instance document which were declared in this schema must be namespace qualified-->
 
-<reservation-list xmlns="urn:x-zemanec:schemas:reservation:1.0"
+<!--xmlns="urn:x-zemanec:schemas:reservation:1.0"-->
+
+<reservation-list
+    
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="urn:x-zemanec:schemas:reservation:1.0 reservation.xsd"
     >
@@ -69,7 +72,7 @@
                 <streetNum>270/30</streetNum>
                 <city>České Budějovice</city>
                 <zip>37001</zip>
-                <country>Czechia</country>
+                <country>Česká republika</country>
             </address>
             <tel>+420777322229</tel>
         </owner>
