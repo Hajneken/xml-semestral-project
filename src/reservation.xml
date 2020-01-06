@@ -2,10 +2,8 @@
 
 <!--indicates that any elements used by the XML instance document which were declared in this schema must be namespace qualified-->
 
-<!--xmlns="urn:x-zemanec:schemas:reservation:1.0"-->
-
 <reservation-list
-    
+    xmlns="urn:x-zemanec:schemas:reservation:1.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="urn:x-zemanec:schemas:reservation:1.0 reservation.xsd"
     >
@@ -39,7 +37,7 @@
         </owner>
         <appointment priority="normální">
             <examination>Preventivní prohlídka a odčervení</examination>
-            <day>2019-12-20</day>
+            <day>2019-12-16</day>
             <time>09:30:00</time>
             <duration unit="min">15</duration>
         </appointment>
@@ -78,7 +76,128 @@
         </owner>
         <appointment priority="vysoká">
             <disease>Podezření na toxoplazmu</disease>
-            <day>2019-12-20</day>
+            <day>2019-12-16</day>
+            <time>11:00:00</time>
+            <duration unit="min">30</duration>
+        </appointment>
+    </reservation>
+    
+<!--    test -->
+    <reservation day="tue">
+        <animal>
+            <identifier internal="kpmj01"></identifier>
+            <species>kočka</species>
+            <breed>Perská kočka</breed>
+            <sex>samice</sex>
+            <age>4</age>
+            <name>Micka</name>
+            <medical condition="true">
+                <weight unit="kg">6.3</weight>
+                <notes>
+                    <p>Březí 4 týdny, luxace pately z. dex. končetina, pohyb zvládá</p>
+                </notes>
+                <medication active-use="true">
+                    <active-ingredient>diclofenaceum natricum</active-ingredient>
+                    <manufacturer>Zentiva</manufacturer>
+                    <dose unit="mg">25</dose>
+                </medication>
+            </medical>
+        </animal>
+        <owner>
+            <email>kolar.jan@centrum.cz</email>
+            <name>Jan Kolář</name>
+            <address>
+                <street>Krajinská</street>
+                <streetNum>270/30</streetNum>
+                <city>České Budějovice</city>
+                <zip>37001</zip>
+                <country>Česká republika</country>
+            </address>
+            <tel>+420777322229</tel>
+        </owner>
+        <appointment priority="vysoká">
+            <disease>Podezření na toxoplazmu</disease>
+            <day>2019-12-17</day>
+            <time>11:00:00</time>
+            <duration unit="min">30</duration>
+        </appointment>
+    </reservation>
+    
+    <reservation day="tue">
+        <animal>
+            <identifier internal="kpmj01"></identifier>
+            <species>kočka</species>
+            <breed>Perská kočka</breed>
+            <sex>samice</sex>
+            <age>4</age>
+            <name>Micka</name>
+            <medical condition="true">
+                <weight unit="kg">6.3</weight>
+                <notes>
+                    <p>Březí 4 týdny, luxace pately z. dex. končetina, pohyb zvládá</p>
+                </notes>
+                <medication active-use="true">
+                    <active-ingredient>diclofenaceum natricum</active-ingredient>
+                    <manufacturer>Zentiva</manufacturer>
+                    <dose unit="mg">25</dose>
+                </medication>
+            </medical>
+        </animal>
+        <owner>
+            <email>kolar.jan@centrum.cz</email>
+            <name>Jan Kolář</name>
+            <address>
+                <street>Krajinská</street>
+                <streetNum>270/30</streetNum>
+                <city>České Budějovice</city>
+                <zip>37001</zip>
+                <country>Česká republika</country>
+            </address>
+            <tel>+420777322229</tel>
+        </owner>
+        <appointment priority="vysoká">
+            <disease>Podezření na toxoplazmu</disease>
+            <day>2019-12-17</day>
+            <time>11:00:00</time>
+            <duration unit="min">30</duration>
+        </appointment>
+    </reservation>
+    
+    <reservation day="tue">
+        <animal>
+            <identifier internal="kpmj01"></identifier>
+            <species>kočka</species>
+            <breed>Perská kočka</breed>
+            <sex>samice</sex>
+            <age>4</age>
+            <name>Micka</name>
+            <medical condition="true">
+                <weight unit="kg">6.3</weight>
+                <notes>
+                    <p>Březí 4 týdny, luxace pately z. dex. končetina, pohyb zvládá</p>
+                </notes>
+                <medication active-use="true">
+                    <active-ingredient>diclofenaceum natricum</active-ingredient>
+                    <manufacturer>Zentiva</manufacturer>
+                    <dose unit="mg">25</dose>
+                </medication>
+            </medical>
+        </animal>
+        <owner>
+            <email>kolar.jan@centrum.cz</email>
+            <name>Jan Kolář</name>
+            <address>
+                <street>Krajinská</street>
+                <streetNum>270/30</streetNum>
+                <city>České Budějovice</city>
+                <zip>37001</zip>
+                <country>Česká republika</country>
+            </address>
+            <tel>+420777322229</tel>
+        </owner>
+        <appointment priority="vysoká">
+            <disease>Podezření na toxoplazmu</disease>
+            <day>2019-12-17</day>
             <time>11:00:00</time>
             <duration unit="min">30</duration>
         </appointment>

@@ -70,6 +70,10 @@ th::after{
         
 }
 
+.animal{
+    text-transform: capitalize;
+}
+
 .notes{
     background: rgba(0, 0, 0, 0.082);
 }
