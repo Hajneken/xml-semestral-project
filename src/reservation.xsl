@@ -3,40 +3,43 @@
     xpath-default-namespace="urn:x-zemanec:schemas:reservation:1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
 
-    <xsl:output method="html" encoding="UTF-8"/>
-    
-    <xsl:variable name="nav">
-        <nav>
-            <a href="index.html">Zpět na přehled</a>
-        </nav>
-    </xsl:variable>
-    
+    <!--    <xsl:output method="html" encoding="UTF-8"/>-->
+
     <xsl:variable name="head">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="style.css"/>
     </xsl:variable>
 
+    <xsl:variable name="nav">
+        <nav>
+            <a href="index.html">Zpět na přehled</a>
+            <a href="javascript:history.back()">Zpět</a>
+        </nav>
+    </xsl:variable>
+
     <xsl:template match="/">
+
         <!--        render list of days with reservation count -->
         <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
         <html>
             <head>
-                <xsl:copy-of select="$head" />
+                <xsl:copy-of select="$head"/>
                 <title>List rezervací</title>
             </head>
             <body>
-                <xsl:apply-templates mode="list"/>
+                <xsl:apply-templates mode="list" />
+                    
+                
             </body>
-        </html>
-        
-        <!--        for each animal generate it's own profile in unique file -->
-        <xsl:apply-templates mode="animal"/>
+            <!--        for each animal generate it's own profile in unique file -->
+            <xsl:apply-templates select="reservation-list/reservation" mode="animal"/>
 
-        <!--        for each owner generate it's own profile in unique file-->
-        <xsl:apply-templates mode="owner"/>
-        
-        <!--        for each day generate it's own overview of reservations in unique file-->
-        <xsl:apply-templates mode="overview"/>
+            <!--        for each owner generate it's own profile in unique file-->
+            <xsl:apply-templates select="reservation-list/reservation" mode="owner"/>
+
+            <!--        for each day generate it's own overview of reservations in unique file-->
+            <xsl:apply-templates select="reservation-list" mode="overview"/>
+        </html>
 
     </xsl:template>
 
@@ -49,10 +52,18 @@
                     <th>Datum</th>
                     <th>Počet rezervací</th>
                 </tr>
+                
+<!--                TU -->
+                
+                <!--<xsl:apply-templates select="reservation" mode="list-hacker">
+                  <xsl:sort select="reservation/appointment/day" order="ascending"/>
+                </xsl:apply-templates>-->
+                
                 <xsl:for-each-group select="reservation" group-by="appointment/day">
+                    <xsl:sort select="appointment/day"/>
                     <tr>
                         <td>
-                            <a class="name" href="overview{generate-id(.)}.html">
+                            <a class="name" href="overview_{generate-id(.)}.html">
                                 <xsl:if test=".[@day = 'mon']">
                                     <xsl:text>pondělí </xsl:text>
                                 </xsl:if>
@@ -80,54 +91,27 @@
                         </td>
                     </tr>
                 </xsl:for-each-group>
-                <!--                <xsl:apply-templates select="reservation" mode="list"> </xsl:apply-templates>-->
             </table>
         </section>
     </xsl:template>
 
-    <xsl:template match="reservation" mode="list">
-        <xsl:for-each-group select="." group-by="appointment/day">
+    <xsl:template match="reservation-list/reservation" mode="animal">
+        <xsl:apply-templates select="animal" mode="animal"/>
+    </xsl:template>
 
-            <tr>
-                <td>
-                    <a class="name" href="overview{generate-id(.)}">
-                        <xsl:if test=".[@day = 'mon']">
-                            <xsl:text>pondělí </xsl:text>
-                        </xsl:if>
-                        <xsl:if test=".[@day = 'tue']">
-                            <xsl:text>úterý </xsl:text>
-                        </xsl:if>
-                        <xsl:if test=".[@day = 'wed']">
-                            <xsl:text>středa </xsl:text>
-                        </xsl:if>
-                        <xsl:if test=".[@day = 'thu']">
-                            <xsl:text>čtvrtek </xsl:text>
-                        </xsl:if>
-                        <xsl:if test=".[@day = 'fri']">
-                            <xsl:text>pátek </xsl:text>
-                        </xsl:if>
-                    </a>
-                </td>
-                <td>
-                    <xsl:value-of
-                        select="format-date(current-grouping-key(), '[D]. [MNn] [Y]', 'cs', 'AD', 'GE')"
-                    />
-                </td>
-                <td>
-                    <xsl:value-of select="count(current-group())"/>
-                </td>
-            </tr>
-        </xsl:for-each-group>
+    <xsl:template match="reservation-list/reservation" mode="owner">
+        <xsl:apply-templates select="owner" mode="owner"/>
     </xsl:template>
 
     <xsl:template match="animal" mode="animal">
+
         <xsl:result-document method="html" encoding="UTF-8" href="animal_{generate-id(.)}.html">
-            
+
             <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
-            
+
             <html>
                 <head>
-                    <xsl:copy-of select="$head" />
+                    <xsl:copy-of select="$head"/>
                     <title>Zvíře</title>
                 </head>
                 <body>
@@ -160,10 +144,10 @@
                                         <xsl:otherwise>
                                             <xsl:choose>
                                                 <xsl:when test="age &gt; 1 and age &lt; 5">
-                                                    <xsl:text> roky</xsl:text>
+                                                  <xsl:text> roky</xsl:text>
                                                 </xsl:when>
                                                 <xsl:otherwise>
-                                                    <xsl:text> let</xsl:text>
+                                                  <xsl:text> let</xsl:text>
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xsl:otherwise>
@@ -188,15 +172,16 @@
                                 <td>
                                     <xsl:choose>
                                         <xsl:when test="medical[@condition = 'true']">
-                                            <xsl:value-of select="medical/notes"/>
+<!--                                            <xsl:value-of select="medical/notes"/>-->
+                                            <xsl:text>Zhoršený</xsl:text>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:choose>
                                                 <xsl:when test="sex = 'samec'">
-                                                    <xsl:text>Zdravý</xsl:text>
+                                                  <xsl:text>Zdravý</xsl:text>
                                                 </xsl:when>
                                                 <xsl:otherwise>
-                                                    <xsl:text>Zdravá</xsl:text>
+                                                  <xsl:text>Zdravá</xsl:text>
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xsl:otherwise>
@@ -212,16 +197,16 @@
                                 </td>
                             </tr>
                         </table>
-                        
+
                         <p class="notes">
                             <xsl:value-of select="medical/notes"/>
                         </p>
                     </section>
-                    <xsl:copy-of select="$nav" />
+                    <xsl:copy-of select="$nav"/>
                 </body>
             </html>
         </xsl:result-document>
-        
+
     </xsl:template>
 
     <!--zip format-->
@@ -263,7 +248,8 @@
                             <tr>
                                 <th>PSČ</th>
                                 <td>
-                                    <xsl:value-of select="format-number(address/zip, '### ##', 'zip')"/>
+                                    <xsl:value-of
+                                        select="format-number(address/zip, '### ##', 'zip')"/>
                                 </td>
                             </tr>
                             <tr>
@@ -273,7 +259,7 @@
                                 </td>
                             </tr>
                         </table>
-                        
+
                         <h2>Kontakt</h2>
                         <table>
                             <tr>
@@ -294,26 +280,28 @@
                             </tr>
                         </table>
                     </section>
-                    <xsl:copy-of select="$nav" />
+                    <xsl:copy-of select="$nav"/>
                 </body>
             </html>
         </xsl:result-document>
-        
+
     </xsl:template>
 
     <xsl:template match="reservation-list" mode="overview">
-        <xsl:result-document method="html" encoding="UTF-8" href="overview_{generate-id(.)}.html">
-            <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
-            
-            <html>
-                <head>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                    <link rel="stylesheet" href="style.css"/>
-                    <title>Rezervace</title>
-                </head>
-                <body>
-                    <main>
-                        <xsl:for-each-group select="reservation" group-by="appointment/day">
+        <xsl:for-each-group select="reservation" group-by="appointment/day">
+            <xsl:result-document method="html" encoding="UTF-8"
+                href="overview_{generate-id(.)}.html">
+                <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
+
+                <html>
+                    <head>
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                        <link rel="stylesheet" href="style.css"/>
+                        <title>Rezervace</title>
+                    </head>
+                    <body>
+                        <main>
+                            <!--<xsl:for-each-group select="reservation" group-by="appointment/day">-->
                             <h1>
                                 <xsl:text>Rezervace na </xsl:text>
                                 <xsl:if test=".[@day = 'mon']">
@@ -337,24 +325,25 @@
                                     select="format-date(current-grouping-key(), '[D]. [MNn] [Y]', 'cs', 'AD', 'GE')"/>
                                 <xsl:text> )</xsl:text>
                             </h1>
-                            
+
                             <p style="text-align:center; font-weight:bold">
                                 <xsl:value-of select="count(current-group())"/>
                                 <xsl:text> rezervace ⬇</xsl:text>
                             </p>
-                            
+
                             <!-- sorting starting with the earliest appointmennt -->
                             <xsl:apply-templates select="current-group()" mode="overview">
                                 <xsl:sort select="appointment/time" order="ascending"/>
                             </xsl:apply-templates>
-                            
-                        </xsl:for-each-group>
-                        
-                    </main>
-                    <xsl:copy-of select="$nav" />
-                </body>
-            </html>
-        </xsl:result-document>
+
+
+
+                        </main>
+                        <xsl:copy-of select="$nav"/>
+                    </body>
+                </html>
+            </xsl:result-document>
+        </xsl:for-each-group>
     </xsl:template>
 
     <xsl:template match="reservation" mode="overview">
@@ -374,7 +363,7 @@
             <xsl:value-of select="breed"/>
             <xsl:text> ) - </xsl:text>
             <!--            TODO generate-id() -->
-            <a class="name" href="animal{generate-id(.)}">
+            <a class="name" href="animal_{generate-id(.)}.html">
                 <xsl:value-of select="name"/>
             </a>
         </p>
@@ -461,8 +450,7 @@
 
         <h2>Majitel</h2>
         <p class="owner">
-            <!--            TODO generate-id() -->
-            <a class="name" href="owner{generate-id(.)}">
+            <a class="name" href="owner_{generate-id(.)}.html">
                 <xsl:value-of select="name"/>
             </a>
 

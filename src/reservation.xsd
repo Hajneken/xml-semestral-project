@@ -119,6 +119,7 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <!-- g | kg-->
     <xs:simpleType name="weightUnitType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="kg"/>
@@ -133,6 +134,7 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- possible HTML extension -->
     <xs:complexType name="notesType">
         <xs:choice>
             <xs:element name="p" type="paragraphType" minOccurs="1" maxOccurs="unbounded"/>
@@ -163,7 +165,6 @@
             <xs:extension base="doseAmountType">
                 <xs:attribute name="unit" type="doseUnitType"/>
             </xs:extension>
-
         </xs:simpleContent>
     </xs:complexType>
 
@@ -173,6 +174,7 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- ml for liquids | mg for pills -->
     <xs:simpleType name="doseUnitType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="ml"/>
@@ -196,10 +198,11 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <!-- No numbers -->
     <xs:simpleType name="ownerNameType">
         <xs:restriction base="xs:string">
             <xs:pattern
-                value="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčřšžňÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
+                value="[a-zA-ZěščřžýáíéàáâäãåąčćęèéěêëėįìíîïłńòóôöõøùúûüųūÿýýżźñçčřšžňÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+"
             />
         </xs:restriction>
     </xs:simpleType>
@@ -258,8 +261,8 @@
     <xs:simpleType name="priorityType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="vysoká" />
+            <xs:enumeration value="střední" />
             <xs:enumeration value="normální" />
-            <xs:enumeration value="nízká" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -287,6 +290,7 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <!-- min | hod -->
     <xs:simpleType name="timeUnitType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="min"/>

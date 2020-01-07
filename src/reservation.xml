@@ -23,7 +23,6 @@
             </medical>
         </animal>
         <owner>
-            <!--            (?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])-->
             <email>jarka@seznam.cz</email>
             <name>Jaroslava Kaňková</name>
             <address>
@@ -32,7 +31,6 @@
                 <zip>38101</zip>
                 <country>Czechia</country>
             </address>
-            <!--            ^[+]?[()/0-9. -]{9,}$   -->
             <tel>+42072049229</tel>
         </owner>
         <appointment priority="normální">
@@ -83,43 +81,43 @@
     </reservation>
     
 <!--    test -->
-    <reservation day="tue">
+    <reservation day="wed">
         <animal>
-            <identifier internal="kpmj01"></identifier>
-            <species>kočka</species>
-            <breed>Perská kočka</breed>
-            <sex>samice</sex>
-            <age>4</age>
-            <name>Micka</name>
+            <identifier internal="psmj01"></identifier>
+            <species>pes</species>
+            <breed>Samojed</breed>
+            <sex>samec</sex>
+            <age>2</age>
+            <name>Snowie</name>
             <medical condition="true">
-                <weight unit="kg">6.3</weight>
+                <weight unit="kg">35</weight>
                 <notes>
-                    <p>Březí 4 týdny, luxace pately z. dex. končetina, pohyb zvládá</p>
+                    <p>Obézní, zánět kloubní jamky na dex. končetině, alergie na jelení maso</p>
                 </notes>
                 <medication active-use="true">
-                    <active-ingredient>diclofenaceum natricum</active-ingredient>
+                    <active-ingredient>defanol chlorin</active-ingredient>
                     <manufacturer>Zentiva</manufacturer>
                     <dose unit="mg">25</dose>
                 </medication>
             </medical>
         </animal>
         <owner>
-            <email>kolar.jan@centrum.cz</email>
-            <name>Jan Kolář</name>
+            <email>voze@seznam.cz</email>
+            <name>Vojtěch Zelený</name>
             <address>
-                <street>Krajinská</street>
-                <streetNum>270/30</streetNum>
-                <city>České Budějovice</city>
-                <zip>37001</zip>
+                <street>Námořní</street>
+                <streetNum>230/3</streetNum>
+                <city>Praha</city>
+                <zip>18004</zip>
                 <country>Česká republika</country>
             </address>
-            <tel>+420777322229</tel>
+            <tel>+420732893888</tel>
         </owner>
-        <appointment priority="vysoká">
-            <disease>Podezření na toxoplazmu</disease>
-            <day>2019-12-17</day>
-            <time>11:00:00</time>
-            <duration unit="min">30</duration>
+        <appointment priority="normální">
+            <examination>Nadváha</examination>
+            <day>2019-12-18</day>
+            <time>14:00:00</time>
+            <duration unit="min">15</duration>
         </appointment>
     </reservation>
     
@@ -199,6 +197,40 @@
             <disease>Podezření na toxoplazmu</disease>
             <day>2019-12-17</day>
             <time>11:00:00</time>
+            <duration unit="min">30</duration>
+        </appointment>
+    </reservation>
+    
+    <reservation day="fri">
+        <animal>
+            <identifier internal="kpmj01"></identifier>
+            <species>Pták</species>
+            <breed>Papoušek Ara</breed>
+            <sex>samice</sex>
+            <age>16</age>
+            <name>Bedřiška</name>
+            <medical condition="true">
+                <weight unit="kg">1.3</weight>
+                <notes>
+                    <p>Povlak na zobáku, návštěva</p>
+                </notes>
+            </medical>
+        </animal>
+        <owner>
+            <email>hugo.bugo@gmail.com</email>
+            <name>Hugo Slavník</name>
+            <address>
+                <street>Javorová</street>
+                <streetNum>3106</streetNum>
+                <city>Most</city>
+                <zip>43401</zip>
+                <country>Česká republika</country>
+            </address>
+        </owner>
+        <appointment priority="střední">
+            <disease>Infekce na zobáku</disease>
+            <day>2019-12-20</day>
+            <time>15:15:00</time>
             <duration unit="min">30</duration>
         </appointment>
     </reservation>
