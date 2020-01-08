@@ -27,9 +27,7 @@
                 <title>List rezervací</title>
             </head>
             <body>
-                <xsl:apply-templates mode="list" />
-                    
-                
+                <xsl:apply-templates mode="list"/>
             </body>
             <!--        for each animal generate it's own profile in unique file -->
             <xsl:apply-templates select="reservation-list/reservation" mode="animal"/>
@@ -52,13 +50,13 @@
                     <th>Datum</th>
                     <th>Počet rezervací</th>
                 </tr>
-                
-<!--                TU -->
-                
+
+                <!--                TU -->
+
                 <!--<xsl:apply-templates select="reservation" mode="list-hacker">
                   <xsl:sort select="reservation/appointment/day" order="ascending"/>
                 </xsl:apply-templates>-->
-                
+
                 <xsl:for-each-group select="reservation" group-by="appointment/day">
                     <xsl:sort select="appointment/day"/>
                     <tr>
@@ -112,7 +110,7 @@
             <html>
                 <head>
                     <xsl:copy-of select="$head"/>
-                    <title>Zvíře</title>
+                    <title>Zvíře - <xsl:value-of select="name" /></title>
                 </head>
                 <body>
                     <h1>Informace o zvířeti</h1>
@@ -172,7 +170,7 @@
                                 <td>
                                     <xsl:choose>
                                         <xsl:when test="medical[@condition = 'true']">
-<!--                                            <xsl:value-of select="medical/notes"/>-->
+                                            <!--                                            <xsl:value-of select="medical/notes"/>-->
                                             <xsl:text>Zhoršený</xsl:text>
                                         </xsl:when>
                                         <xsl:otherwise>
@@ -222,7 +220,7 @@
                 <head>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                     <link rel="stylesheet" href="style.css"/>
-                    <title>List rezervací</title>
+                    <title>Majitel - <xsl:value-of select="name" /></title>
                 </head>
                 <body>
                     <h1>Informace o majiteli</h1>
@@ -297,7 +295,7 @@
                     <head>
                         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                         <link rel="stylesheet" href="style.css"/>
-                        <title>Rezervace</title>
+                        <title>Rezervace - <xsl:value-of select="format-date(appointment/day,'[D]. [MNn] [Y]', 'cs', 'AD', 'GE')"></xsl:value-of></title>
                     </head>
                     <body>
                         <main>
@@ -336,8 +334,6 @@
                                 <xsl:sort select="appointment/time" order="ascending"/>
                             </xsl:apply-templates>
 
-
-
                         </main>
                         <xsl:copy-of select="$nav"/>
                     </body>
@@ -362,7 +358,6 @@
             <xsl:text> ( </xsl:text>
             <xsl:value-of select="breed"/>
             <xsl:text> ) - </xsl:text>
-            <!--            TODO generate-id() -->
             <a class="name" href="animal_{generate-id(.)}.html">
                 <xsl:value-of select="name"/>
             </a>

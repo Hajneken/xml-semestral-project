@@ -218,7 +218,9 @@
         </animal>
         <owner>
             <email>hugo.bugo@gmail.com</email>
+            
             <name>Hugo Slavník</name>
+            
             <address>
                 <street>Javorová</street>
                 <streetNum>3106</streetNum>
@@ -226,6 +228,7 @@
                 <zip>43401</zip>
                 <country>Česká republika</country>
             </address>
+            <tel>+420374882229</tel>
         </owner>
         <appointment priority="střední">
             <disease>Infekce na zobáku</disease>
