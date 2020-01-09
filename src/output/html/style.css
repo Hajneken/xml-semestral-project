@@ -161,3 +161,18 @@ p.notes{
     color: rgba(0, 0, 0, 0.7);
 }
 
+.img-wrap{
+    display: flex;
+    justify-content: center;
+}
+
+.img-wrap a{
+    display: block;
+}
+
+img{
+    border-radius: 50%;
+    width: 50%;
+    height: 50%;
+}
+

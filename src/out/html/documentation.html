@@ -1,0 +1,265 @@
+<html xmlns:ng="http://docbook.org/docbook-ng"><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Dokumentace pro evidenci rezervac&iacute; n&aacute;v&#353;t&#283;v veterin&aacute;rn&iacute; ambulance</title><meta name="generator" content="DocBook XSL Stylesheets V1.79.2"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book"><div class="titlepage"><div><div><h1 class="title"><a name="d5e1"></a>Dokumentace pro evidenci rezervac&iacute; n&aacute;v&#353;t&#283;v veterin&aacute;rn&iacute; ambulance</h1></div><div><h2 class="subtitle">Semestr&aacute;ln&iacute; pr&aacute;ce 4IZ238</h2></div><div><div class="author"><h3 class="author">Hynek Zemanec</h3><code class="email">&lt;<a class="email" href="mailto:zemh02@vse.cz">zemh02@vse.cz</a>&gt;</code></div></div><div><p class="copyright">Copyright &copy; 2020 </p></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="preface"><a href="#d5e11">&Uacute;vod</a></span></dt><dt><span class="part"><a href="#d5e14">I. Projekt</a></span></dt><dd><dl><dt><span class="chapter"><a href="#d5e16">1. Zad&aacute;n&iacute;</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e20">Po&#382;adavky</a></span></dt><dt><span class="sect1"><a href="#d5e25">&#344;e&#353;en&iacute;</a></span></dt></dl></dd></dl></dd><dt><span class="part"><a href="#d5e35">II. Implementace</a></span></dt><dd><dl><dt><span class="chapter"><a href="#d5e37">2. XML</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e41">XML Dokument</a></span></dt><dt><span class="sect1"><a href="#d5e51">V&yacute;znamy element&#367;</a></span></dt><dt><span class="sect1"><a href="#d5e144">Rezervace</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d5e148">3. Sch&eacute;ma</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e155">Valida&#269;n&iacute; soubor</a></span></dt><dt><span class="sect1"><a href="#d5e161">Jednoduch&eacute; typy </a></span></dt><dt><span class="sect1"><a href="#d5e170">Komplexn&iacute; typy</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d5e184">4. XSLT</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e189">V&yacute;stup do HTML</a></span></dt><dt><span class="sect1"><a href="#d5e207">Zaj&iacute;mav&eacute; XSLT konstrukce</a></span></dt><dt><span class="sect1"><a href="#d5e217">CSS</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d5e227">5. Form&aacute;tovac&iacute; Objekty</a></span></dt></dl></dd></dl></div><div class="preface"><div class="titlepage"><div><div><h1 class="title"><a name="d5e11"></a>&Uacute;vod</h1></div></div></div><p> Tento dokument obsahuje dokumentaci k semestr&aacute;ln&iacute; pr&aacute;ci pro p&#345;edm&#283;t 4IZ238 zam&#283;&#345;en&yacute;
+            na XML technologie na Vysok&eacute; &#353;kole ekonomick&eacute; v Praze. Projekt se v&#283;nuje zpracov&aacute;n&iacute;
+            informac&iacute; poskytnut&yacute;ch v r&aacute;mci rezervac&iacute; n&aacute;v&#353;t&#283;v klient&#367; mal&eacute; veterin&aacute;rn&iacute; ambulance a
+            tyto informace zp&#345;ehled&#328;uje v prov&aacute;zan&yacute;ch HTML dokumentech a PDF souboru. </p></div><div class="part"><div class="titlepage"><div><div><h1 class="title"><a name="d5e14"></a>Part&nbsp;I.&nbsp;Projekt</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="chapter"><a href="#d5e16">1. Zad&aacute;n&iacute;</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e20">Po&#382;adavky</a></span></dt><dt><span class="sect1"><a href="#d5e25">&#344;e&#353;en&iacute;</a></span></dt></dl></dd></dl></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="d5e16"></a>Chapter&nbsp;1.&nbsp;Zad&aacute;n&iacute;</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="#d5e20">Po&#382;adavky</a></span></dt><dt><span class="sect1"><a href="#d5e25">&#344;e&#353;en&iacute;</a></span></dt></dl></div><p>C&iacute;lem projektu je zpracov&aacute;n&iacute; syst&eacute;mu eviduj&iacute;c&iacute; rezervace majitel&#367; zv&iacute;&#345;at pro
+                nez&aacute;vislou veterin&aacute;rn&iacute; ambulanci. Konkr&eacute;tn&#283; se jedn&aacute; o veterin&aacute;rn&iacute; ambulanci se
+                s&iacute;dlem v &#268;esk&yacute;ch Bud&#283;jovic&iacute;ch, zab&yacute;vaj&iacute;c&iacute; se preventivn&iacute; p&eacute;&#269;&iacute; a l&eacute;&#269;bou mal&yacute;ch
+                zv&iacute;&#345;at. Zad&aacute;n&iacute; zachycuje v&yacute;stupy prob&#283;hl&eacute; anal&yacute;zy pot&#345;eb veterin&aacute;&#345;ky <span class="emphasis"><em>MVDr.
+                    Dany Zemancov&eacute;</em></span>. </p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e20"></a>Po&#382;adavky</h2></div></div></div><p>Veterin&aacute;&#345; p&#345;i v&yacute;konu sv&eacute; pr&aacute;ce pracuje s &#345;adou informac&iacute;. Pot&#345;ebuje v&#283;d&#283;t o
+                    jak&eacute; zv&iacute;&#345;e a plemeno se jedn&aacute;, jak&yacute; je jeho v&#283;k, pohlav&iacute; a zdravotn&iacute; stav a a
+                    u&#382;&iacute;vanou d&aacute;vku p&#345;&iacute;padn&yacute;ch l&eacute;k&#367;. Na z&aacute;klad&#283; t&#283;chto informac&iacute; veterin&aacute;&#345; m&#367;&#382;e
+                    stanovit diagn&oacute;zu p&#345;&iacute;padn&eacute;ho onemocn&#283;n&iacute; a doporu&#269;it l&eacute;&#269;ebu. Za dodr&#382;ov&aacute;n&iacute;
+                    stanoven&eacute; l&eacute;&#269;by je ov&#353;em zodpov&#283;dn&yacute; majitel. Nejen z toho d&#367;vodu veterin&aacute;&#345; mus&iacute;
+                    evidovat i kontaktn&iacute; informace na majitele, v&#269;etn&#283; jeho bydli&#353;t&#283; pro p&#345;&iacute;pad
+                    nutn&eacute;ho v&yacute;jezdu.</p><p>I p&#345;es objedn&aacute;n&iacute; na ur&#269;it&yacute; &#269;as se b&#283;&#382;n&#283; st&aacute;v&aacute;, &#382;e &#269;asov&yacute; odhad n&aacute;v&#353;t&#283;v
+                    neodpov&iacute;d&aacute; realit&#283;. V takov&yacute;ch p&#345;&iacute;padech mus&iacute; veterin&aacute;&#345; prioritizovat o&#353;et&#345;en&iacute;
+                    v&aacute;&#382;n&#283;j&iacute;&#353;&iacute;ch p&#345;&iacute;pad&#367;, p&#345;&iacute;padn&#283; domluvit s klientem chirurgick&yacute; z&aacute;krok mimo
+                    ordina&#269;n&iacute; hodiny.</p><p>Pro snadn&#283;j&#353;&iacute; rozli&#353;en&iacute; zv&iacute;&#345;at je v neposledn&iacute; &#345;ad&#283; nezbytn&eacute; zv&iacute;&#345;at&#367;m p&#345;i&#345;adit
+                    jednozna&#269;n&yacute; identifik&aacute;tor. Na to u ps&#367; pamatuje legislativa, kter&aacute; na&#345;izuje
+                    jejich povinn&eacute; o&#269;ipov&aacute;n&iacute;.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e25"></a>&#344;e&#353;en&iacute;</h2></div></div></div><p>V&yacute;stupem syst&eacute;mu jsou p&#345;ehledn&#283; poskytnut&eacute; informace o po&#269;tu a p&#345;edm&#283;tu
+                    rezervac&iacute; v jednotliv&yacute;ch dnech dan&eacute;ho obdob&iacute;. Rezervace jsou shrom&aacute;&#382;d&#283;ny do
+                    izolovan&yacute;ch skupin po dnech a se&#345;azeny podle &#269;asu p&#345;edpokl&aacute;dan&eacute; n&aacute;v&#353;t&#283;vy. Ka&#382;d&aacute;
+                    rezervace mimojin&eacute; zahrnuje d&#367;vod n&aacute;v&#353;t&#283;vy v&#269;etn&#283; barevn&#283; odli&#353;en&eacute; hodnoty podle
+                    p&#345;i&#345;azen&eacute; priority. D&aacute;le rezervace zahrnuje informace o zdravotn&iacute;m stavu zv&iacute;&#345;ete
+                    v&#269;etn&#283; p&#345;&iacute;padn&yacute;ch l&eacute;k&#367;. Jako posledn&iacute; ka&#382;d&aacute; rezervace zahrnuje kontaktn&iacute;
+                    informace na majitele. V&#353;echny uveden&eacute; informace m&#367;&#382;e veterin&aacute;&#345; prohl&iacute;&#382;et v
+                    r&aacute;mci libovoln&eacute;ho internetov&eacute;ho prohl&iacute;&#382;e&#269;e formou HTML dokument&#367; a z&aacute;rove&#328; i ve
+                    vhodn&eacute; variant&#283; ur&#269;en&eacute; pro tisk ve form&aacute;tou PDF.</p><p>Syst&eacute;m p&#345;edpokl&aacute;d&aacute; p&#345;&iacute;jem XML dokumentu vyhovuj&iacute;c&iacute; pravidl&#367;m definovan&yacute;ch v
+                    r&aacute;mci navr&#382;en&eacute;ho XML sch&eacute;matu. Bli&#382;&#353;&iacute; specifikace zpracov&aacute;v&aacute;n&yacute;ch informac&iacute; je
+                    uveden&aacute; v kapitole rozeb&iacute;raj&iacute;c&iacute; struktur&#367; p&#345;&iacute;choz&iacute;ho XML dokumentu. Samotn&eacute;
+                    sch&eacute;ma bylo definov&aacute;no pomoc&iacute; <span class="emphasis"><em>XML Schema</em></span>. Pro transformaci
+                    dat do HTML byl pou&#382;it stylovac&iacute; (&#353;ablonovac&iacute;) jazyk <span class="emphasis"><em>XSL (eXtensible
+                        Stylesheet Language).</em></span> K HTML byly nav&iacute;c vytvo&#345;eny CSS styly. V
+                    kombinaci s form&aacute;tovac&iacute;mi objekty (<span class="emphasis"><em>XSL FO</em></span>) jsou nakonec
+                    data p&#345;etransformov&aacute;na do PDF dokumentu. Ve&#353;ker&eacute; v&yacute;stupy jsou generv&aacute;ny do
+                    adres&aacute;&#345;e <code class="code">/src/ouput</code>, do podadres&aacute;&#345;e <code class="code">/html</code> pro v&yacute;stupy
+                    ur&#269;en&eacute; pro webov&yacute; prohl&iacute;&#382;e&#269; a do podadres&aacute;&#345;e <code class="code">pdf</code> pro tisk.</p></div></div></div><div class="part"><div class="titlepage"><div><div><h1 class="title"><a name="d5e35"></a>Part&nbsp;II.&nbsp;Implementace</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="chapter"><a href="#d5e37">2. XML</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e41">XML Dokument</a></span></dt><dt><span class="sect1"><a href="#d5e51">V&yacute;znamy element&#367;</a></span></dt><dt><span class="sect1"><a href="#d5e144">Rezervace</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d5e148">3. Sch&eacute;ma</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e155">Valida&#269;n&iacute; soubor</a></span></dt><dt><span class="sect1"><a href="#d5e161">Jednoduch&eacute; typy </a></span></dt><dt><span class="sect1"><a href="#d5e170">Komplexn&iacute; typy</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d5e184">4. XSLT</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d5e189">V&yacute;stup do HTML</a></span></dt><dt><span class="sect1"><a href="#d5e207">Zaj&iacute;mav&eacute; XSLT konstrukce</a></span></dt><dt><span class="sect1"><a href="#d5e217">CSS</a></span></dt></dl></dd><dt><span class="chapter"><a href="#d5e227">5. Form&aacute;tovac&iacute; Objekty</a></span></dt></dl></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="d5e37"></a>Chapter&nbsp;2.&nbsp;XML</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="#d5e41">XML Dokument</a></span></dt><dt><span class="sect1"><a href="#d5e51">V&yacute;znamy element&#367;</a></span></dt><dt><span class="sect1"><a href="#d5e144">Rezervace</a></span></dt></dl></div><p><span class="emphasis"><em>XML (Extensible Markup Language)</em></span> je standardizovan&yacute;
+                zna&#269;kovac&iacute; jazyk slou&#382;&iacute;c&iacute; pro v&yacute;m&#283;nu dat mezi syst&eacute;my. Popisuje strukturu
+                vym&#283;&#328;ovan&eacute;ho obsahu a p&#345;i&#345;azuje v&yacute;znam jednotliv&yacute;m hodnot&aacute;m. Existuje &#345;ada
+                technologi&iacute;, kter&eacute; respektuj&iacute; syntaktick&aacute; pravidla XML a dok&aacute;&#382;&iacute; nap&#345;&iacute;klad
+                transformovat XML dokument do jin&yacute;ch form&aacute;t&#367; bez nutnosti extern&iacute;ho programovac&iacute;ho
+                jazyka.</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e41"></a>XML Dokument</h2></div></div></div><p>XML dokument <code class="code">reservation.xml</code> je uk&aacute;zkou vaidn&iacute;ho XML souboru pro
+                    &uacute;&#269;ely syst&eacute;mu. Ko&#345;enov&yacute;m elementem dokumentu je seznam rezervac&iacute;
+                        <code class="code">&lt;reservation-list&gt;</code> obsahuj&iacute;c&iacute; d&iacute;l&#269;&iacute; rezervace
+                        <code class="code">&lt;reservation&gt;</code>. Rezervace obsahuje atribut
+                        <code class="code">day</code>, ur&#269;uj&iacute;c&iacute; den n&aacute;v&#353;t&#283;vy. Ka&#382;d&aacute; rezervce pak obsahuje uzly
+                        <code class="code">&lt;animal&gt;</code> s informacemi o zv&iacute;&#345;eti,
+                        <code class="code">&lt;owner&gt;</code> s informacemi o majiteli a
+                        <code class="code">&lt;appointment&gt;</code> popisuj&iacute;c&iacute; samotnou n&aacute;v&#353;t&#283;vu. </p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e51"></a>V&yacute;znamy element&#367;</h2></div></div></div><p>V r&aacute;mci zv&iacute;&#345;ete se eviduj&iacute; n&aacute;sleduj&iacute;c&iacute; elementy:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="code">identifier</code>: &#269;&iacute;slo &#269;ipu , m&#367;&#382;e z&#367;stat pr&aacute;zdn&yacute;</p></li><li class="listitem"><p><code class="code">species</code>: druh zv&iacute;&#345;ete </p></li><li class="listitem"><p><code class="code">breed</code>: plemeno zv&iacute;&#345;ete </p></li><li class="listitem"><p><code class="code">sex</code>: pohlav&iacute; zv&iacute;&#345;ete</p></li><li class="listitem"><p><code class="code">age</code>: v&#283;k zv&iacute;&#345;ete </p></li><li class="listitem"><p><code class="code">name</code>: jm&eacute;no zv&iacute;&#345;ete </p></li><li class="listitem"><p><code class="code">medical</code>: informace o zdravotn&iacute;m stavu, d&aacute;le se d&#283;l&iacute; na</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p><code class="code">weight</code>: v&aacute;ha zv&iacute;&#345;ete</p></li><li class="listitem"><p><code class="code">notes</code>: pozn&aacute;mky veterin&aacute;&#345;e o zdravotn&iacute;m
+                                        stavu</p></li><li class="listitem"><p><code class="code">medication</code>: u&#382;&iacute;van&eacute; l&eacute;ky (nepovinn&yacute;), d&aacute;le se
+                                        d&#283;l&iacute; na: </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: square; "><li class="listitem"><p>
+                                                  <code class="code">active-ingredient</code>: &uacute;&#269;inn&aacute; l&aacute;tka
+                                                </p></li><li class="listitem"><p>
+                                                  <code class="code">manufacturer</code>: v&yacute;robce l&eacute;ku </p></li><li class="listitem"><p>
+                                                  <code class="code">dose</code>: d&aacute;vka &uacute;&#269;inn&eacute; l&aacute;tky </p></li></ul></div></li></ul></div></li></ul></div><p> V r&aacute;mci majitele se eviduj&iacute; elementy: </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><code class="code">email</code>: emailov&aacute; adresa</p></li><li class="listitem"><p><code class="code">name</code>: jm&eacute;no a p&#345;&iacute;jmen&iacute; majitele</p></li><li class="listitem"><p><code class="code">address</code>: bydli&#353;t&#283; majitele, d&aacute;le se d&#283;l&iacute; na</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem"><p><code class="code">street</code>: ulice</p></li><li class="listitem"><p><code class="code">streetNum</code>: &#269;&iacute;slo popisn&eacute;</p></li><li class="listitem"><p><code class="code">city</code>: obec</p></li><li class="listitem"><p><code class="code">zip</code>: po&#353;tovn&iacute; sm&#283;rovac&iacute; &#269;&iacute;slo</p></li><li class="listitem"><p><code class="code">country</code>: zem&#283;</p></li></ul></div></li><li class="listitem"><p><code class="code">tel</code>: telefonn&iacute; &#269;&iacute;slo</p></li></ul></div><p> V r&aacute;mci n&aacute;v&#353;t&#283;vy se eviduj&iacute; elementy: </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><span class="emphasis"><em>druh n&aacute;v&#353;t&#283;vy</em></span>: jedno z n&aacute;sleduj&iacute;c&iacute;ch:
+                                    <code class="code">examination</code> prohl&iacute;dka, <code class="code">disease</code> nemoc,
+                                    <code class="code">injury</code> poran&#283;n&iacute;, <code class="code">surgery</code> chirurgick&yacute;
+                                z&aacute;krok, <code class="code">other</code> ostatn&iacute;</p></li><li class="listitem"><p><code class="code">day</code>: datum rezervace</p></li><li class="listitem"><p><code class="code">time</code>: &#269;as rezervace</p></li><li class="listitem"><p><code class="code">duration</code>: p&#345;edpokl&aacute;dan&eacute; trv&aacute;n&iacute; n&aacute;v&#353;t&#283;vy</p></li></ul></div><p>
+                </p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e144"></a>Rezervace</h2></div></div></div><p>P&#345;&iacute;kladem validn&iacute;ho uzlu rezervace v XML dokumentu je n&aacute;sleduj&iacute;c&iacute;
+                    uk&aacute;zka.</p><pre class="programlisting">
+                    
+&lt;reservation day="mon"&gt;
+    &lt;animal&gt;
+        &lt;identifier internal="pmgj01"&gt;940000123321456&lt;/identifier&gt;
+        &lt;species&gt;pes&lt;/species&gt;
+        &lt;breed&gt;mops&lt;/breed&gt;
+        &lt;sex&gt;samec&lt;/sex&gt;
+        &lt;age&gt;1&lt;/age&gt;
+        &lt;name&gt;Gyros&lt;/name&gt;
+        &lt;medical condition="false"&gt;
+            &lt;weight unit="kg"&gt;10.3&lt;/weight&gt;
+            &lt;notes&gt;
+                &lt;p&gt;Zdrav&yacute;, v&aacute;ha v norm&#283;, bez probl&eacute;m&#367;, 
+                seklina do duhovky dex. oka zhojena&lt;/p&gt;
+            &lt;/notes&gt;
+        &lt;/medical&gt;
+    &lt;/animal&gt;
+    &lt;owner&gt;
+        &lt;email&gt;jarka@seznam.cz&lt;/email&gt;
+        &lt;name&gt;Jaroslava Ka&#328;kov&aacute;&lt;/name&gt;
+        &lt;address&gt;
+            &lt;street&gt;Lineck&aacute;&lt;/street&gt; &lt;streetNum&gt;7/2144&lt;/streetNum&gt;
+            &lt;city&gt;&#268;esk&yacute; Krumlov&lt;/city&gt;
+            &lt;zip&gt;38101&lt;/zip&gt;
+            &lt;country&gt;Czechia&lt;/country&gt;
+        &lt;/address&gt;
+        &lt;tel&gt;+42072049229&lt;/tel&gt;
+    &lt;/owner&gt;
+    &lt;appointment priority="norm&aacute;ln&iacute;"&gt;
+        &lt;examination&gt;Preventivn&iacute; prohl&iacute;dka a od&#269;erven&iacute;&lt;/examination&gt;
+        &lt;day&gt;2019-12-16&lt;/day&gt;
+        &lt;time&gt;09:30:00&lt;/time&gt;
+        &lt;duration unit="min"&gt;15&lt;/duration&gt;
+    &lt;/appointment&gt;
+&lt;/reservation&gt;
+                    
+                </pre></div></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="d5e148"></a>Chapter&nbsp;3.&nbsp;Sch&eacute;ma</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="#d5e155">Valida&#269;n&iacute; soubor</a></span></dt><dt><span class="sect1"><a href="#d5e161">Jednoduch&eacute; typy </a></span></dt><dt><span class="sect1"><a href="#d5e170">Komplexn&iacute; typy</a></span></dt></dl></div><p><span class="emphasis"><em>XML Sch&eacute;ma</em></span> je standardizovan&yacute; XML form&aacute;t pro popis sch&eacute;mat.
+                Pomoc&iacute; struktur diskutovan&eacute;ho jazyka byly definov&aacute;ny pravidla pro validn&iacute; XML
+                dokument. Standard nab&iacute;z&iacute; mno&#382;inu b&#283;&#382;n&yacute;ch datov&yacute;ch typ&#367; jako nap&#345;.
+                    <code class="code">string</code>, <code class="code">integer</code> nebo <code class="code">date</code> a mnoho
+                dal&#353;&iacute;ch. Ty umo&#382;&#328;uje d&aacute;le zu&#382;ovat podm&iacute;nkami dle libosti. XML sch&eacute;ma rozli&#353;uje mezi
+                jednoduch&yacute;mi a komplexn&iacute;mi typy. Jednoduch&yacute; typem m&#367;&#382;e b&yacute;t element bez atributu a
+                bez vno&#345;en&eacute;ho elementu nebo samotn&yacute; atribut. Jestli&#382;e element poru&#353;uje jednu z
+                t&#283;chto podm&iacute;nek, jedn&aacute; se o komplexn&iacute; typ.</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e155"></a>Valida&#269;n&iacute; soubor</h2></div></div></div><p> Definice sch&eacute;ma je obsa&#382;ena v souboru <code class="code">reservation.xsd</code>. Sch&eacute;ma
+                    definuje jmenn&yacute; prostor <code class="code">urn:x-zemanec:schemas:reservation:1.0</code>. Ten
+                    je definov&aacute;n v ko&#345;enov&eacute;m elementu <code class="code">&lt;xs:schema&gt;</code>, kter&yacute; obsahuje
+                    definice validn&iacute;ch typ&#367;, jejich&#382; v&yacute;znamy byly pops&aacute;ny v p&#345;edchoz&iacute;
+                    kapitole.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e161"></a>Jednoduch&eacute; typy </h2></div></div></div><p> Sch&eacute;ma obsahuje celkem 44 jednoduch&yacute;ch typ&#367;. Pravidla se pro validn&iacute;
+                    jednoduch&yacute; typ ur&#269;uj&iacute; pomoc&iacute; restrikce a sice vyps&aacute;n&iacute;m diskr&eacute;tn&iacute;ho po&#269;tu hodnot
+                    pomoc&iacute; <code class="code">enumeration</code>, regul&aacute;rn&iacute;ho v&yacute;razu pomoc&iacute; <code class="code">pattern</code>
+                    nebo maxim&aacute;ln&iacute; a minim&aacute;ln&iacute; hodnoty u &#269;&iacute;seln&yacute;ch hodnot. P&#345;&iacute;kladem jednoduch&eacute;ho
+                    typu je atribut <code class="code">day</code> na elementu
+                    <code class="code">&lt;reservation&gt;</code>.</p><pre class="programlisting">
+
+&lt;xs:simpleType name="dayType"&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+        &lt;xs:enumeration value="mon"/&gt;
+        &lt;xs:enumeration value="tue"/&gt;
+        &lt;xs:enumeration value="wed"/&gt;
+        &lt;xs:enumeration value="thu"/&gt;
+        &lt;xs:enumeration value="fri"/&gt;
+    &lt;/xs:restriction&gt;
+&lt;/xs:simpleType&gt;
+
+             </pre><p> V r&aacute;mci restrikce je definov&aacute;no 5 explicitn&iacute;ch validn&iacute;ch textov&yacute;ch &#345;et&#283;zc&#367;,
+                    reprezentuj&iacute;c&iacute; dny v t&yacute;dnu. </p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e170"></a>Komplexn&iacute; typy</h2></div></div></div><p>D&aacute;le sch&eacute;ma obsahuje celkem 28 komplexn&iacute;ch typ&#367;. N&aacute;sleduj&iacute;c&iacute; konstrukce je
+                    p&#345;&iacute;kladem komplexn&iacute;ho typu definuj&iacute;c&iacute; typ n&aacute;v&#353;t&#283;vy</p><pre class="programlisting">
+                    
+&lt;xs:complexType name="appointmentType"&gt;
+    &lt;xs:sequence&gt;
+        &lt;xs:choice&gt;
+            &lt;xs:element name="examination" type="xs:string"/&gt;
+            &lt;xs:element name="disease" type="xs:string"/&gt;
+            &lt;xs:element name="injury" type="xs:string"/&gt;
+            &lt;xs:element name="surgery" type="surgeryType"/&gt;
+            &lt;xs:element name="other" type="xs:string"/&gt;
+        &lt;/xs:choice&gt;
+        &lt;xs:element name="day" type="xs:date"/&gt;
+        &lt;xs:element name="time" type="xs:time"/&gt;
+        &lt;xs:element name="duration" type="durationType"/&gt;
+    &lt;/xs:sequence&gt;
+    &lt;xs:attribute name="priority" type="priorityType" /&gt;
+&lt;/xs:complexType&gt;
+                    
+                </pre><p>Definice typu pro n&aacute;v&#353;t&#283;vu konstrukc&iacute; <code class="code">xs:sequence</code> ur&#269;uje povinn&eacute;
+                    po&#345;ad&iacute; 4 definovan&yacute;ch potomk&#367;. Prvn&iacute; potomek je specifick&yacute; t&iacute;m, &#382;e m&#367;&#382;e b&yacute;t
+                    jedn&iacute;m z v&yacute;&#269;tu element&#367; v r&aacute;mci <code class="code">xs:choice</code>. Na konci konstrukce
+                    element <code class="code">xs:attribute</code> &#345;&iacute;k&aacute;, &#382;e element mus&iacute; obsahovat atribut
+                        <code class="code">priority</code> ve tvaru definovan&eacute;m v typu
+                    <code class="code">priorityType</code></p><p>P&#345;i konstrukci sch&eacute;matu byla vyu&#382;ita metoda <span class="emphasis"><em>slep&eacute;ho
+                        ben&aacute;t&#269;ana</em></span>, kter&aacute; je oproti metod&#283; <span class="emphasis"><em>sal&aacute;mov&yacute;ch
+                        kole&#269;ek</em></span> a <span class="emphasis"><em>matri&oacute;&#353;ka</em></span> nejpracn&#283;j&#353;&iacute;, ale
+                    z&aacute;rove&#328; kombinuje v&yacute;hody obou p&#345;&iacute;stup&#367;. Proto se jedn&aacute; o nejlep&#353;&iacute; metodu pro
+                    definici sch&eacute;mat.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="d5e184"></a>Chapter&nbsp;4.&nbsp;XSLT</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="sect1"><a href="#d5e189">V&yacute;stup do HTML</a></span></dt><dt><span class="sect1"><a href="#d5e207">Zaj&iacute;mav&eacute; XSLT konstrukce</a></span></dt><dt><span class="sect1"><a href="#d5e217">CSS</a></span></dt></dl></div><p><span class="emphasis"><em>XSLT (XML Transformation)</em></span>je &#353;ablonovac&iacute; jazyk popisuj&iacute;c&iacute;
+                pravidla transformace skrze XSLT procesor do po&#382;adovan&eacute;ho v&yacute;stupn&iacute;ho souboru (XML,
+                HTML, XHTML apod.). Vyu&#382;&iacute;v&aacute; se p&#345;i tom mimojin&eacute; &#353;ablonovac&iacute;ch konstrukc&iacute;, podm&iacute;nek
+                pro v&yacute;pis uzl&#367; a z&aacute;pis pravidel pomoc&iacute; XML m&aacute; objektov&yacute; n&aacute;dech. K pr&#367;chodu, v&yacute;pisu
+                nebo nap&#345;. seskupov&aacute;n&iacute; uzl&#367; XML dokumentu se v XSLT stylu pou&#382;&iacute;v&aacute; jazyk
+                    <span class="emphasis"><em>Xpath</em></span>. </p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e189"></a>V&yacute;stup do HTML</h2></div></div></div><p>&#352;ablona pro v&yacute;stup do HTML je definov&aacute;na v souboru
+                        <code class="code">reservation.xsl</code>. Pomoc&iacute; konstrukce
+                        <code class="code">xsl:result-document</code> je doc&iacute;leno generov&aacute;n&iacute; HTML soubor&#367; do
+                    n&#283;kolika navz&aacute;jem prov&aacute;zan&yacute;ch str&aacute;nek. Celkem jsou generov&aacute;ny 4 druhy str&aacute;nek: </p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+                                <span class="bold"><strong>P&#345;ehled rezervac&iacute;</strong></span>: seznam
+                                jednotliv&yacute;ch rezervac&iacute;</p></li><li class="listitem"><p>
+                                <span class="bold"><strong>Seznam rezervac&iacute;</strong></span>: v&yacute;pis rezervac&iacute; k
+                                ur&#269;it&eacute;mu dni</p></li><li class="listitem"><p>
+                                <span class="bold"><strong>Zv&iacute;&#345;e</strong></span>: profil zv&iacute;&#345;ete s jeho
+                                informacemi</p></li><li class="listitem"><p>
+                                <span class="bold"><strong>Majitel</strong></span>: profil majitele s
+                                kontaktn&iacute;mi informacemi</p></li></ul></div><p> Mimo &uacute;vodn&iacute; p&#345;ehled obsahuj&iacute; v&#353;echny HTML soubory na konci
+                    str&aacute;nky jednoduchou navigaci. Prvn&iacute; odkaz u&#382;ivatele navr&aacute;t&iacute; v&#382;dy na P&#345;ehled
+                    rezervac&iacute;. Druh&yacute; odkaz vyu&#382;&iacute;v&aacute; History API prohl&iacute;&#382;e&#269;e a pomoc&iacute; JavaScriptu vrac&iacute;
+                    u&#382;ivatele v&#382;dy na p&#345;edchoz&iacute; str&aacute;nku. </p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e207"></a>Zaj&iacute;mav&eacute; XSLT konstrukce</h2></div></div></div><p>V&#353;em &#353;ablon&aacute;m je p&#345;i&#345;azen m&oacute;d pomoc&iacute; atributu <code class="code">mode</code>, kter&yacute;m je
+                    ur&#269;eno jakou &#353;ablonu pou&#382;&iacute;t v p&#345;&iacute;pad&#283; konfliktu n&aacute;zv&#367;. N&aacute;sleduj&iacute;c&iacute; k&oacute;d je
+                    p&#345;&iacute;kladem &#353;ablony, konkr&eacute;tn&#283; &#353;ablony pro &uacute;vodn&iacute; p&#345;ehled rezervac&iacute;.</p><pre class="programlisting">
+                    
+&lt;xsl:template match="reservation-list" mode="list"&gt;
+    &lt;h1&gt;P&#345;ehled rezervac&iacute; ve dnech&lt;/h1&gt;
+    &lt;section class="box"&gt;
+        &lt;table&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Den&lt;/th&gt;
+                &lt;th&gt;Datum&lt;/th&gt;
+                &lt;th&gt;Po&#269;et rezervac&iacute;&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;xsl:for-each-group select="reservation" 
+            group-by="appointment/day"&gt;
+                &lt;xsl:sort select="appointment/day"/&gt;
+            &lt;tr&gt;
+                &lt;td&gt;
+                    &lt;a class="name" 
+                    href="overview_{generate-id(.)}.html"&gt;
+                        &lt;xsl:if test=".[@day = 'mon']"&gt;
+                            &lt;xsl:text&gt;pond&#283;l&iacute; &lt;/xsl:text&gt;
+                        &lt;/xsl:if&gt;
+                        &lt;xsl:if test=".[@day = 'tue']"&gt;
+                            &lt;xsl:text&gt;&uacute;ter&yacute; &lt;/xsl:text&gt;
+                        &lt;/xsl:if&gt;
+                        &lt;xsl:if test=".[@day = 'wed']"&gt;
+                            &lt;xsl:text&gt;st&#345;eda &lt;/xsl:text&gt;
+                        &lt;/xsl:if&gt;
+                        &lt;xsl:if test=".[@day = 'thu']"&gt;
+                            &lt;xsl:text&gt;&#269;tvrtek &lt;/xsl:text&gt;
+                        &lt;/xsl:if&gt;
+                        &lt;xsl:if test=".[@day = 'fri']"&gt;
+                            &lt;xsl:text&gt;p&aacute;tek &lt;/xsl:text&gt;
+                        &lt;/xsl:if&gt;
+                    &lt;/a&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                   &lt;xsl:value-of
+                     select="format-date(current-grouping-key(),
+                     '[D]. [MNn] [Y]', 'cs', 'AD', 'GE')"
+                    /&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;xsl:value-of select="count(current-group())"/&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;/xsl:for-each-group&gt;
+        &lt;/table&gt;
+    &lt;/section&gt;
+&lt;/xsl:template&gt;
+                    
+                </pre><p>&#352;ablona proch&aacute;z&iacute; XML dokumentem a seskupuje v&#353;echny rezervace na z&aacute;klad&#283;
+                    v&yacute;sledku Xpath dotazu na uzel pro datum n&aacute;v&#353;t&#283;vy. Pomoc&iacute; <code class="code">xsl:sort</code>
+                    jednotliv&eacute; skupiny se&#345;azuje podle data n&aacute;v&#353;t&#283;vy od nejstar&#353;&iacute;ho. Pro ka&#382;dou
+                    skupinu na konkr&eacute;tn&iacute; den je generov&aacute;n odkaz na rezervace pro tento den do
+                    tabulky. Do druh&eacute;ho sloupce se vyb&iacute;r&aacute; datum datum, kter&eacute; se prost&#345;ednictv&iacute;m
+                    xpath funkce <code class="code">format-date()</code> automaticky form&aacute;tuje do &#269;esk&eacute;ho form&aacute;tu
+                    gregori&aacute;nsk&eacute;ho kalend&aacute;&#345;e. Do posledn&iacute;ho sloupce tabulky se generuje &#269;&iacute;slo
+                    reprezentuj&iacute;c&iacute; po&#269;et rezervac&iacute; na dann&yacute; den. To je doc&iacute;leno Xpath funkc&iacute;
+                        <code class="code">current-group()</code> uvnit&#345; funkce <code class="code">count()</code>.</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d5e217"></a>CSS</h2></div></div></div><p><span class="emphasis"><em>Kask&aacute;dov&eacute; styly (Cascading Stylesheets)</em></span> definuj&iacute; vzhled
+                    obsahu HTML str&aacute;nek. Od&#283;luje se tak vzhled od obsahu. Narozd&iacute;l od XSL nejsou
+                    prim&aacute;rn&#283; ur&#269;eny na p&#345;id&aacute;v&aacute;n&iacute; obsahu. P&#345;esto v CSS 3 lze v omezen&eacute; m&iacute;&#345;e
+                    pseudoelementy obsah do HTML p&#345;id&aacute;vat.</p><p> P&#345;&iacute;kladem p&#345;id&aacute;n&iacute; vizu&aacute;ln&iacute;ho obsahu je n&aacute;sleduj&iacute;c&iacute; uk&aacute;zka pou&#382;it&aacute; v r&aacute;mci
+                    projektu na odd&#283;lov&aacute;n&iacute; jednotliv&yacute;ch rezervac&iacute;. </p><pre class="programlisting">
+                    
+.box:not(:last-child)::after{
+    content: "";
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 5px;
+    border-radius: 10px;
+    background: rgb(255, 255, 255);
+}
+                    
+                </pre><p> Pravidlo vyb&iacute;r&aacute; v&#353;echny t&#345;&iacute;dy
+                        <code class="code">box</code>, kter&eacute; nejsou posledn&iacute;m potomkem. Pseudoelementem
+                        <code class="code">::after</code> pravidlo p&#345;id&aacute;v&aacute; absolutn&#283; napozicovan&yacute; obd&eacute;ln&iacute;k, kter&yacute;
+                    je kombinac&iacute; funkce <code class="code">translateX(-50%)</code> a vlastnosti <code class="code">left:
+                        50%;</code> vycentrov&aacute;n do st&#345;edu relativn&#283; napozicovan&eacute;ho rodi&#269;e.</p></div></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="d5e227"></a>Chapter&nbsp;5.&nbsp;Form&aacute;tovac&iacute; Objekty</h2></div></div></div><p><span class="emphasis"><em>XSL FO (XSL Formatting Objects)</em></span> je hojn&#283; vyu&#382;&iacute;van&yacute; standard
+                pro transformaci XML dokument&#367; do elektronick&yacute;ch i ti&#353;t&#283;n&yacute;ch form&aacute;t&#367; jako PDF nebo
+                EPUB. Form&aacute;tovac&iacute; objekty lze ch&aacute;pat jako zjednodu&#353;en&aacute; obdoba CSS. Narozd&iacute;l od
+                v&yacute;stupu do HTML se v&yacute;stup do PDF prov&aacute;d&iacute; ve 2 kroc&iacute;ch. V prvn&iacute;m kroku se pomoc&iacute; XSL
+                dokument p&#345;etransformuje do podoby s form&aacute;tovac&iacute;mi objekty. V druh&eacute;m kroku prob&iacute;h&aacute;
+                samotn&eacute; generov&aacute;n&iacute; souboru ur&#269;en&eacute;mu k tisku.</p><p>Souborem kter&yacute; transformuje XML do FO je <code class="code">reservationFO.xsl</code> A&#269;koliv
+                konstrukce form&aacute;tovac&iacute;ch objekt&#367; se pojmenov&aacute;n&iacute;m li&#353;&iacute; od element&#367; pou&#382;&iacute;van&yacute;ch v
+                HTML, vypisov&aacute;n&iacute; hodnot pomoc&iacute; XSL z&#367;st&aacute;v&aacute; stejn&eacute;. Proto lze s lehk&yacute;mi modifikacemi
+                vyu&#382;&iacute;t konstrukc&iacute; pou&#382;it&yacute;ch pro generov&aacute;n&iacute; HTML soubor&#367;. V&yacute;stup do PDF je stejn&#283;
+                jako v HTML prolinkov&aacute;n odkazy.</p></div></div></div></body></html>

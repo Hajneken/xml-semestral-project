@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbookxi.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <info>
+        <title>Dokumentace pro evidenci rezervací návštěv veterinární ambulance</title>
+        <subtitle>Semestrální práce 4IZ238</subtitle>
+
+        <author>
+            <personname>Hynek Zemanec</personname>
+            <email>zemh02@vse.cz</email>
+        </author>
+        <orgname>Vysoká škola ekonomická v Praze</orgname>
+        <copyright>
+            <year>2020</year>
+        </copyright>
+    </info>
+
+    <preface>
+        <title>Úvod</title>
+        <para> Tento dokument obsahuje dokumentaci k semestrální práci pro předmět 4IZ238 zaměřený
+            na XML technologie na Vysoké škole ekonomické v Praze. Projekt se věnuje zpracování
+            informací poskytnutých v rámci rezervací návštěv klientů malé veterinární ambulance a
+            tyto informace zpřehledňuje v provázaných HTML dokumentech a PDF souboru. </para>
+    </preface>
+    <part>
+        <title>Projekt</title>
+        <chapter>
+            <title>Zadání</title>
+            <para>Cílem projektu je zpracování systému evidující rezervace majitelů zvířat pro
+                nezávislou veterinární ambulanci. Konkrétně se jedná o veterinární ambulanci se
+                sídlem v Českých Budějovicích, zabývající se preventivní péčí a léčbou malých
+                zvířat. Zadání zachycuje výstupy proběhlé analýzy potřeb veterinářky <emphasis>MVDr.
+                    Dany Zemancové</emphasis>. </para>
+            <sect1>
+                <title>Požadavky</title>
+                <para>Veterinář při výkonu své práce pracuje s řadou informací. Potřebuje vědět o
+                    jaké zvíře a plemeno se jedná, jaký je jeho věk, pohlaví a zdravotní stav a a
+                    užívanou dávku případných léků. Na základě těchto informací veterinář může
+                    stanovit diagnózu případného onemocnění a doporučit léčebu. Za dodržování
+                    stanovené léčby je ovšem zodpovědný majitel. Nejen z toho důvodu veterinář musí
+                    evidovat i kontaktní informace na majitele, včetně jeho bydliště pro případ
+                    nutného výjezdu.</para>
+                <para>I přes objednání na určitý čas se běžně stává, že časový odhad návštěv
+                    neodpovídá realitě. V takových případech musí veterinář prioritizovat ošetření
+                    vážnějíších případů, případně domluvit s klientem chirurgický zákrok mimo
+                    ordinační hodiny.</para>
+                <para>Pro snadnější rozlišení zvířat je v neposlední řadě nezbytné zvířatům přiřadit
+                    jednoznačný identifikátor. Na to u psů pamatuje legislativa, která nařizuje
+                    jejich povinné očipování.</para>
+            </sect1>
+            <sect1>
+                <title>Řešení</title>
+                <para>Výstupem systému jsou přehledně poskytnuté informace o počtu a předmětu
+                    rezervací v jednotlivých dnech daného období. Rezervace jsou shromážděny do
+                    izolovaných skupin po dnech a seřazeny podle času předpokládané návštěvy. Každá
+                    rezervace mimojiné zahrnuje důvod návštěvy včetně barevně odlišené hodnoty podle
+                    přiřazené priority. Dále rezervace zahrnuje informace o zdravotním stavu zvířete
+                    včetně případných léků. Jako poslední každá rezervace zahrnuje kontaktní
+                    informace na majitele. Všechny uvedené informace může veterinář prohlížet v
+                    rámci libovolného internetového prohlížeče formou HTML dokumentů a zároveň i ve
+                    vhodné variantě určené pro tisk ve formátou PDF.</para>
+                <para>Systém předpokládá příjem XML dokumentu vyhovující pravidlům definovaných v
+                    rámci navrženého XML schématu. Bližší specifikace zpracováváných informací je
+                    uvedená v kapitole rozebírající strukturů příchozího XML dokumentu. Samotné
+                    schéma bylo definováno pomocí <emphasis>XML Schema</emphasis>. Pro transformaci
+                    dat do HTML byl použit stylovací (šablonovací) jazyk <emphasis>XSL (eXtensible
+                        Stylesheet Language).</emphasis> K HTML byly navíc vytvořeny CSS styly. V
+                    kombinaci s formátovacími objekty (<emphasis>XSL FO</emphasis>) jsou nakonec
+                    data přetransformována do PDF dokumentu. Veškeré výstupy jsou genervány do
+                    adresáře <code>/src/ouput</code>, do podadresáře <code>/html</code> pro výstupy
+                    určené pro webový prohlížeč a do podadresáře <code>pdf</code> pro tisk.</para>
+            </sect1>
+        </chapter>
+    </part>
+    <part>
+        <title>Implementace</title>
+
+        <chapter>
+            <title>XML</title>
+            <para><emphasis>XML (Extensible Markup Language)</emphasis> je standardizovaný
+                značkovací jazyk sloužící pro výměnu dat mezi systémy. Popisuje strukturu
+                vyměňovaného obsahu a přiřazuje význam jednotlivým hodnotám. Existuje řada
+                technologií, které respektují syntaktická pravidla XML a dokáží například
+                transformovat XML dokument do jiných formátů bez nutnosti externího programovacího
+                jazyka.</para>
+            <sect1>
+                <title>XML Dokument</title>
+                <para>XML dokument <code>reservation.xml</code> je ukázkou vaidního XML souboru pro
+                    účely systému. Kořenovým elementem dokumentu je seznam rezervací
+                        <code>&lt;reservation-list&gt;</code> obsahující dílčí rezervace
+                        <code>&lt;reservation&gt;</code>. Rezervace obsahuje atribut
+                        <code>day</code>, určující den návštěvy. Každá rezervce pak obsahuje uzly
+                        <code>&lt;animal&gt;</code> s informacemi o zvířeti,
+                        <code>&lt;owner&gt;</code> s informacemi o majiteli a
+                        <code>&lt;appointment&gt;</code> popisující samotnou návštěvu. </para>
+            </sect1>
+            <sect1>
+                <title>Významy elementů</title>
+                <para>V rámci zvířete se evidují následující elementy:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><code>identifier</code>: číslo čipu , může zůstat prázdný</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>species</code>: druh zvířete </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>breed</code>: plemeno zvířete </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>sex</code>: pohlaví zvířete</para>
+                    </listitem>
+                    <listitem>
+                        <para><code>age</code>: věk zvířete </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>name</code>: jméno zvířete </para>
+                    </listitem>
+                    <listitem>
+                        <para><code>medical</code>: informace o zdravotním stavu, dále se dělí na<itemizedlist>
+                                <listitem>
+                                    <para><code>weight</code>: váha zvířete</para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>notes</code>: poznámky veterináře o zdravotním
+                                        stavu</para>
+                                </listitem>
+                                <listitem>
+                                    <para><code>medication</code>: užívané léky (nepovinný), dále se
+                                        dělí na: <itemizedlist>
+                                            <listitem>
+                                                <para>
+                                                  <code>active-ingredient</code>: účinná látka
+                                                </para>
+                                            </listitem>
+                                            <listitem>
+                                                <para>
+                                                  <code>manufacturer</code>: výrobce léku </para>
+                                            </listitem>
+                                            <listitem>
+                                                <para>
+                                                  <code>dose</code>: dávka účinné látky </para>
+                                            </listitem>
+                                        </itemizedlist></para>
+                                </listitem>
+                            </itemizedlist></para>
+                    </listitem>
+                </itemizedlist>
+                <para> V rámci majitele se evidují elementy: <itemizedlist>
+                        <listitem>
+                            <para><code>email</code>: emailová adresa</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>name</code>: jméno a příjmení majitele</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>address</code>: bydliště majitele, dále se dělí na<itemizedlist>
+                                    <listitem>
+                                        <para><code>street</code>: ulice</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><code>streetNum</code>: číslo popisné</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><code>city</code>: obec</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><code>zip</code>: poštovní směrovací číslo</para>
+                                    </listitem>
+                                    <listitem>
+                                        <para><code>country</code>: země</para>
+                                    </listitem>
+                                </itemizedlist></para>
+                        </listitem>
+                        <listitem>
+                            <para><code>tel</code>: telefonní číslo</para>
+                        </listitem>
+                    </itemizedlist> V rámci návštěvy se evidují elementy: <itemizedlist>
+                        <listitem>
+                            <para><emphasis>druh návštěvy</emphasis>: jedno z následujících:
+                                    <code>examination</code> prohlídka, <code>disease</code> nemoc,
+                                    <code>injury</code> poranění, <code>surgery</code> chirurgický
+                                zákrok, <code>other</code> ostatní</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>day</code>: datum rezervace</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>time</code>: čas rezervace</para>
+                        </listitem>
+                        <listitem>
+                            <para><code>duration</code>: předpokládané trvání návštěvy</para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </sect1>
+            <sect1>
+                <title>Rezervace</title>
+                <para>Příkladem validního uzlu rezervace v XML dokumentu je následující
+                    ukázka.</para>
+
+                <programlisting>
+                    <![CDATA[
+<reservation day="mon">
+    <animal>
+        <identifier internal="pmgj01">940000123321456</identifier>
+        <species>pes</species>
+        <breed>mops</breed>
+        <sex>samec</sex>
+        <age>1</age>
+        <name>Gyros</name>
+        <medical condition="false">
+            <weight unit="kg">10.3</weight>
+            <notes>
+                <p>Zdravý, váha v normě, bez problémů, 
+                seklina do duhovky dex. oka zhojena</p>
+            </notes>
+        </medical>
+    </animal>
+    <owner>
+        <email>jarka@seznam.cz</email>
+        <name>Jaroslava Kaňková</name>
+        <address>
+            <street>Linecká</street> <streetNum>7/2144</streetNum>
+            <city>Český Krumlov</city>
+            <zip>38101</zip>
+            <country>Czechia</country>
+        </address>
+        <tel>+42072049229</tel>
+    </owner>
+    <appointment priority="normální">
+        <examination>Preventivní prohlídka a odčervení</examination>
+        <day>2019-12-16</day>
+        <time>09:30:00</time>
+        <duration unit="min">15</duration>
+    </appointment>
+</reservation>
+                    ]]>
+                </programlisting>
+            </sect1>
+
+        </chapter>
+        <chapter>
+            <title>Schéma</title>
+            <para><emphasis>XML Schéma</emphasis> je standardizovaný XML formát pro popis schémat.
+                Pomocí struktur diskutovaného jazyka byly definovány pravidla pro validní XML
+                dokument. Standard nabízí množinu běžných datových typů jako např.
+                    <code>string</code>, <code>integer</code> nebo <code>date</code> a mnoho
+                dalších. Ty umožňuje dále zužovat podmínkami dle libosti. XML schéma rozlišuje mezi
+                jednoduchými a komplexními typy. Jednoduchý typem může být element bez atributu a
+                bez vnořeného elementu nebo samotný atribut. Jestliže element porušuje jednu z
+                těchto podmínek, jedná se o komplexní typ.</para>
+            <sect1>
+                <title>Validační soubor</title>
+
+                <para> Definice schéma je obsažena v souboru <code>reservation.xsd</code>. Schéma
+                    definuje jmenný prostor <code>urn:x-zemanec:schemas:reservation:1.0</code>. Ten
+                    je definován v kořenovém elementu <code>&lt;xs:schema&gt;</code>, který obsahuje
+                    definice validních typů, jejichž významy byly popsány v předchozí
+                    kapitole.</para>
+
+            </sect1>
+
+            <sect1>
+
+                <title>Jednoduché typy </title>
+
+                <para> Schéma obsahuje celkem 44 jednoduchých typů. Pravidla se pro validní
+                    jednoduchý typ určují pomocí restrikce a sice vypsáním diskrétního počtu hodnot
+                    pomocí <code>enumeration</code>, regulárního výrazu pomocí <code>pattern</code>
+                    nebo maximální a minimální hodnoty u číselných hodnot. Příkladem jednoduchého
+                    typu je atribut <code>day</code> na elementu
+                    <code>&lt;reservation&gt;</code>.</para>
+
+                <programlisting>
+<![CDATA[
+<xs:simpleType name="dayType">
+    <xs:restriction base="xs:string">
+        <xs:enumeration value="mon"/>
+        <xs:enumeration value="tue"/>
+        <xs:enumeration value="wed"/>
+        <xs:enumeration value="thu"/>
+        <xs:enumeration value="fri"/>
+    </xs:restriction>
+</xs:simpleType>
+]]>
+             </programlisting>
+
+                <para> V rámci restrikce je definováno 5 explicitních validních textových řetězců,
+                    reprezentující dny v týdnu. </para>
+            </sect1>
+
+            <sect1>
+                <title>Komplexní typy</title>
+                <para>Dále schéma obsahuje celkem 28 komplexních typů. Následující konstrukce je
+                    příkladem komplexního typu definující typ návštěvy</para>
+
+                <programlisting>
+                    <![CDATA[
+<xs:complexType name="appointmentType">
+    <xs:sequence>
+        <xs:choice>
+            <xs:element name="examination" type="xs:string"/>
+            <xs:element name="disease" type="xs:string"/>
+            <xs:element name="injury" type="xs:string"/>
+            <xs:element name="surgery" type="surgeryType"/>
+            <xs:element name="other" type="xs:string"/>
+        </xs:choice>
+        <xs:element name="day" type="xs:date"/>
+        <xs:element name="time" type="xs:time"/>
+        <xs:element name="duration" type="durationType"/>
+    </xs:sequence>
+    <xs:attribute name="priority" type="priorityType" />
+</xs:complexType>
+                    ]]>
+                </programlisting>
+
+                <para>Definice typu pro návštěvu konstrukcí <code>xs:sequence</code> určuje povinné
+                    pořadí 4 definovaných potomků. První potomek je specifický tím, že může být
+                    jedním z výčtu elementů v rámci <code>xs:choice</code>. Na konci konstrukce
+                    element <code>xs:attribute</code> říká, že element musí obsahovat atribut
+                        <code>priority</code> ve tvaru definovaném v typu
+                    <code>priorityType</code></para>
+
+                <para>Při konstrukci schématu byla využita metoda <emphasis>slepého
+                        benátčana</emphasis>, která je oproti metodě <emphasis>salámových
+                        koleček</emphasis> a <emphasis>matrióška</emphasis> nejpracnější, ale
+                    zároveň kombinuje výhody obou přístupů. Proto se jedná o nejlepší metodu pro
+                    definici schémat.</para>
+
+            </sect1>
+
+        </chapter>
+        <chapter>
+            <title>XSLT</title>
+            <para><emphasis>XSLT (XML Transformation)</emphasis>je šablonovací jazyk popisující
+                pravidla transformace skrze XSLT procesor do požadovaného výstupního souboru (XML,
+                HTML, XHTML apod.). Využívá se při tom mimojiné šablonovacích konstrukcí, podmínek
+                pro výpis uzlů a zápis pravidel pomocí XML má objektový nádech. K průchodu, výpisu
+                nebo např. seskupování uzlů XML dokumentu se v XSLT stylu používá jazyk
+                    <emphasis>Xpath</emphasis>. </para>
+
+            <sect1>
+                <title>Výstup do HTML</title>
+
+                <para>Šablona pro výstup do HTML je definována v souboru
+                        <code>reservation.xsl</code>. Pomocí konstrukce
+                        <code>xsl:result-document</code> je docíleno generování HTML souborů do
+                    několika navzájem provázaných stránek. Celkem jsou generovány 4 druhy stránek: <itemizedlist>
+                        <listitem>
+                            <para>
+                                <emphasis role="bold">Přehled rezervací</emphasis>: seznam
+                                jednotlivých rezervací</para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis role="bold">Seznam rezervací</emphasis>: výpis rezervací k
+                                určitému dni</para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis role="bold">Zvíře</emphasis>: profil zvířete s jeho
+                                informacemi</para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <emphasis role="bold">Majitel</emphasis>: profil majitele s
+                                kontaktními informacemi</para>
+                        </listitem>
+                    </itemizedlist> Mimo úvodní přehled obsahují všechny HTML soubory na konci
+                    stránky jednoduchou navigaci. První odkaz uživatele navrátí vždy na Přehled
+                    rezervací. Druhý odkaz využívá History API prohlížeče a pomocí JavaScriptu vrací
+                    uživatele vždy na předchozí stránku. </para>
+            </sect1>
+
+            <sect1>
+                <title>Zajímavé XSLT konstrukce</title>
+
+                <para>Všem šablonám je přiřazen mód pomocí atributu <code>mode</code>, kterým je
+                    určeno jakou šablonu použít v případě konfliktu názvů. Následující kód je
+                    příkladem šablony, konkrétně šablony pro úvodní přehled rezervací.</para>
+
+                <programlisting>
+                    <![CDATA[
+<xsl:template match="reservation-list" mode="list">
+    <h1>Přehled rezervací ve dnech</h1>
+    <section class="box">
+        <table>
+            <tr>
+                <th>Den</th>
+                <th>Datum</th>
+                <th>Počet rezervací</th>
+            </tr>
+            <xsl:for-each-group select="reservation" 
+            group-by="appointment/day">
+                <xsl:sort select="appointment/day"/>
+            <tr>
+                <td>
+                    <a class="name" 
+                    href="overview_{generate-id(.)}.html">
+                        <xsl:if test=".[@day = 'mon']">
+                            <xsl:text>pondělí </xsl:text>
+                        </xsl:if>
+                        <xsl:if test=".[@day = 'tue']">
+                            <xsl:text>úterý </xsl:text>
+                        </xsl:if>
+                        <xsl:if test=".[@day = 'wed']">
+                            <xsl:text>středa </xsl:text>
+                        </xsl:if>
+                        <xsl:if test=".[@day = 'thu']">
+                            <xsl:text>čtvrtek </xsl:text>
+                        </xsl:if>
+                        <xsl:if test=".[@day = 'fri']">
+                            <xsl:text>pátek </xsl:text>
+                        </xsl:if>
+                    </a>
+                </td>
+                <td>
+                   <xsl:value-of
+                     select="format-date(current-grouping-key(),
+                     '[D]. [MNn] [Y]', 'cs', 'AD', 'GE')"
+                    />
+                </td>
+                <td>
+                    <xsl:value-of select="count(current-group())"/>
+                </td>
+            </tr>
+            </xsl:for-each-group>
+        </table>
+    </section>
+</xsl:template>
+                    ]]>
+                </programlisting>
+
+                <para>Šablona prochází XML dokumentem a seskupuje všechny rezervace na základě
+                    výsledku Xpath dotazu na uzel pro datum návštěvy. Pomocí <code>xsl:sort</code>
+                    jednotlivé skupiny seřazuje podle data návštěvy od nejstaršího. Pro každou
+                    skupinu na konkrétní den je generován odkaz na rezervace pro tento den do
+                    tabulky. Do druhého sloupce se vybírá datum datum, které se prostřednictvím
+                    xpath funkce <code>format-date()</code> automaticky formátuje do českého formátu
+                    gregoriánského kalendáře. Do posledního sloupce tabulky se generuje číslo
+                    reprezentující počet rezervací na danný den. To je docíleno Xpath funkcí
+                        <code>current-group()</code> uvnitř funkce <code>count()</code>.</para>
+
+            </sect1>
+
+            <sect1>
+                <title>CSS</title>
+                <para><emphasis>Kaskádové styly (Cascading Stylesheets)</emphasis> definují vzhled
+                    obsahu HTML stránek. Oděluje se tak vzhled od obsahu. Narozdíl od XSL nejsou
+                    primárně určeny na přidávání obsahu. Přesto v CSS 3 lze v omezené míře
+                    pseudoelementy obsah do HTML přidávat.</para>
+                <para> Příkladem přidání vizuálního obsahu je následující ukázka použitá v rámci
+                    projektu na oddělování jednotlivých rezervací. <programlisting>
+                    <![CDATA[
+.box:not(:last-child)::after{
+    content: "";
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 5px;
+    border-radius: 10px;
+    background: rgb(255, 255, 255);
+}
+                    ]]>
+                </programlisting> Pravidlo vybírá všechny třídy
+                        <code>box</code>, které nejsou posledním potomkem. Pseudoelementem
+                        <code>::after</code> pravidlo přidává absolutně napozicovaný obdélník, který
+                    je kombinací funkce <code>translateX(-50%)</code> a vlastnosti <code>left:
+                        50%;</code> vycentrován do středu relativně napozicovaného rodiče.</para>
+            </sect1>
+
+
+        </chapter>
+        <chapter>
+            <title>Formátovací Objekty</title>
+            <para><emphasis>XSL FO (XSL Formatting Objects)</emphasis> je hojně využívaný standard
+                pro transformaci XML dokumentů do elektronických i tištěných formátů jako PDF nebo
+                EPUB. Formátovací objekty lze chápat jako zjednodušená obdoba CSS. Narozdíl od
+                výstupu do HTML se výstup do PDF provádí ve 2 krocích. V prvním kroku se pomocí XSL
+                dokument přetransformuje do podoby s formátovacími objekty. V druhém kroku probíhá
+                samotné generování souboru určenému k tisku.</para>
+            <para>Souborem který transformuje XML do FO je <code>reservationFO.xsl</code> Ačkoliv
+                konstrukce formátovacích objektů se pojmenováním liší od elementů používaných v
+                HTML, vypisování hodnot pomocí XSL zůstává stejné. Proto lze s lehkými modifikacemi
+                využít konstrukcí použitých pro generování HTML souborů. Výstup do PDF je stejně
+                jako v HTML prolinkován odkazy.</para>
+        </chapter>
+    </part>
+
+</book>

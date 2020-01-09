@@ -3,7 +3,7 @@
     xpath-default-namespace="urn:x-zemanec:schemas:reservation:1.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
 
-    <!--    <xsl:output method="html" encoding="UTF-8"/>-->
+    <xsl:output method="html" encoding="UTF-8"/>
 
     <xsl:variable name="head">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -50,13 +50,6 @@
                     <th>Datum</th>
                     <th>Počet rezervací</th>
                 </tr>
-
-                <!--                TU -->
-
-                <!--<xsl:apply-templates select="reservation" mode="list-hacker">
-                  <xsl:sort select="reservation/appointment/day" order="ascending"/>
-                </xsl:apply-templates>-->
-
                 <xsl:for-each-group select="reservation" group-by="appointment/day">
                     <xsl:sort select="appointment/day"/>
                     <tr>
@@ -91,6 +84,9 @@
                 </xsl:for-each-group>
             </table>
         </section>
+        <div class="img-wrap">
+            <img src="../../img/logo.jpg" alt="Logo veterinární komory"/>
+        </div>
     </xsl:template>
 
     <xsl:template match="reservation-list/reservation" mode="animal">
@@ -170,7 +166,6 @@
                                 <td>
                                     <xsl:choose>
                                         <xsl:when test="medical[@condition = 'true']">
-                                            <!--                                            <xsl:value-of select="medical/notes"/>-->
                                             <xsl:text>Zhoršený</xsl:text>
                                         </xsl:when>
                                         <xsl:otherwise>
