@@ -106,7 +106,7 @@
             <html>
                 <head>
                     <xsl:copy-of select="$head"/>
-                    <title>Zvíře - <xsl:value-of select="name" /></title>
+                    <title>Zvíře - <xsl:value-of select="name"/></title>
                 </head>
                 <body>
                     <h1>Informace o zvířeti</h1>
@@ -181,12 +181,20 @@
                                     </xsl:choose>
                                 </td>
                                 <td>
-                                    <xsl:value-of select="medical/medication/active-ingredient"/>
+                                    <xsl:for-each select="medical/medication">
+                                        <p>
+                                            <xsl:value-of select="active-ingredient"/>
+                                        </p>
+                                    </xsl:for-each>
                                 </td>
                                 <td>
-                                    <xsl:value-of select="medical/medication/dose"/>
-                                    <xsl:text> </xsl:text>
-                                    <xsl:value-of select="medical/medication/dose/@unit"/>
+                                    <xsl:for-each select="medical/medication">
+                                        <p>
+                                            <xsl:value-of select="dose"/>
+                                            <xsl:text> </xsl:text>
+                                            <xsl:value-of select="dose/@unit"/>
+                                        </p>
+                                    </xsl:for-each>
                                 </td>
                             </tr>
                         </table>
@@ -215,7 +223,7 @@
                 <head>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                     <link rel="stylesheet" href="style.css"/>
-                    <title>Majitel - <xsl:value-of select="name" /></title>
+                    <title>Majitel - <xsl:value-of select="name"/></title>
                 </head>
                 <body>
                     <h1>Informace o majiteli</h1>
@@ -290,7 +298,9 @@
                     <head>
                         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                         <link rel="stylesheet" href="style.css"/>
-                        <title>Rezervace - <xsl:value-of select="format-date(appointment/day,'[D]. [MNn] [Y]', 'cs', 'AD', 'GE')"></xsl:value-of></title>
+                        <title>Rezervace - <xsl:value-of
+                                select="format-date(appointment/day, '[D]. [MNn] [Y]', 'cs', 'AD', 'GE')"
+                            /></title>
                     </head>
                     <body>
                         <main>
@@ -424,12 +434,24 @@
 
         <xsl:if test="medical/medication[@active-use = 'true']">
             <p class="medication">
+                <xsl:for-each select="medical/medication">
+                    <xsl:value-of select="active-ingredient"/>
+                    <xsl:text> </xsl:text>
+                    <xsl:value-of select="dose"/>
+                    <xsl:text> </xsl:text>
+                    <xsl:value-of select="dose/@unit"/>
+                    <span> | </span>
+                </xsl:for-each>
+
+            </p>
+
+            <!--<p class="medication">
                 <xsl:value-of select="medical/medication/active-ingredient"/>
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="medical/medication/dose"/>
                 <xsl:text> </xsl:text>
                 <xsl:value-of select="medical/medication/dose/@unit"/>
-            </p>
+            </p>-->
         </xsl:if>
 
     </xsl:template>

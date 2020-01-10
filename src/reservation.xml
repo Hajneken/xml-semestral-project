@@ -40,47 +40,121 @@
             <duration unit="min">15</duration>
         </appointment>
     </reservation>
+    
     <reservation day="mon">
         <animal>
-            <identifier internal="kpmj01"></identifier>
-            <species>kočka</species>
-            <breed>Perská kočka</breed>
-            <sex>samice</sex>
-            <age>4</age>
-            <name>Micka</name>
+            <identifier internal="pjll01">940330123431456</identifier>
+            <species>pes</species>
+            <breed>jezevčík</breed>
+            <sex>samec</sex>
+            <age>3</age>
+            <name>Lord</name>
             <medical condition="true">
-                <weight unit="kg">6.3</weight>
+                <weight unit="kg">12.4</weight>
                 <notes>
-                    <p>Březí 4 týdny, luxace pately z. dex. končetina, pohyb zvládá</p>
+                    <p>Zdravý, váha v normě, nevypadlé mléčné zuby (ag. čelist)</p>
+                </notes>
+            </medical>
+        </animal>
+        <owner>
+            <email>svobodovaLudmila@seznam.cz</email>
+            <name>Ludmila Svobodová</name>
+            <address>
+                <street>Císařská</street> <streetNum>30/288</streetNum>
+                <city>Liberec</city>
+                <zip>46001</zip>
+                <country>Česká Republika</country>
+            </address>
+            <tel>+42072049229</tel>
+        </owner>
+        <appointment priority="střední">
+            <surgery difficulty="drobný">Trhání zubů</surgery>
+            <day>2019-12-16</day>
+            <time>12:30:00</time>
+            <duration unit="min">50</duration>
+        </appointment>
+    </reservation>
+    
+    <reservation day="mon">
+        <animal>
+            <identifier internal="mmfj01"></identifier>
+            <species>morče</species>
+            <breed>Morče domácí</breed>
+            <sex>samec</sex>
+            <age>1</age>
+            <name>Flek</name>
+            <medical condition="true">
+                <weight unit="kg">0.35</weight>
+                <notes>
+                    <p>Infekce dex. oční duhovky, váha v normě, bulka na zádech (zaslat na histologii)</p>
                 </notes>
                 <medication active-use="true">
-                    <active-ingredient>diclofenaceum natricum</active-ingredient>
-                    <manufacturer>Zentiva</manufacturer>
+                    <active-ingredient>dexpanthenol</active-ingredient>
+                    <manufacturer>Bausch</manufacturer>
+                    <dose unit="ml">5</dose>
+                </medication>
+            </medical>
+        </animal>
+        <owner>
+            <email>zimah@seznam.cz</email>
+            <name>Hynek Zima</name>
+            <address>
+                <street>Poutnická</street>
+                <streetNum>8</streetNum>
+                <city>Dolní Lhota</city>
+                <zip>10293</zip>
+                <country>Česká republika</country>
+            </address>
+            <tel>+420470322229</tel>
+        </owner>
+        <appointment priority="vysoká">
+            <injury>Pád ze stolu</injury>
+            <day>2019-12-16</day>
+            <time>09:15:00</time>
+            <duration unit="min">30</duration>
+        </appointment>
+    </reservation>
+    
+    <reservation day="fri">
+        <animal>
+            <identifier internal="kklm01"></identifier>
+            <species>kočka</species>
+            <breed>kočka domácí</breed>
+            <sex>samice</sex>
+            <age>3</age>
+            <name>Líza</name>
+            <medical condition="false">
+                <weight unit="kg">8</weight>
+                <notes>
+                    <p>Mírně podvýživená, agresivní na majitele</p>
+                </notes>
+                <medication active-use="false">
+                    <active-ingredient>defanol chlorin</active-ingredient>
+                    <manufacturer>Biofarm</manufacturer>
                     <dose unit="mg">25</dose>
                 </medication>
             </medical>
         </animal>
         <owner>
-            <email>kolar.jan@centrum.cz</email>
-            <name>Jan Kolář</name>
+            <email>nudnamarie@nuda.cz</email>
+            <name>Marie Nudná</name>
             <address>
-                <street>Krajinská</street>
-                <streetNum>270/30</streetNum>
-                <city>České Budějovice</city>
-                <zip>37001</zip>
-                <country>Česká republika</country>
+                <street>Estepl.</street>
+                <streetNum>5</streetNum>
+                <city>Vídeň</city>
+                <zip>10300</zip>
+                <country>Rakousko</country>
             </address>
-            <tel>+420777322229</tel>
+            <tel>+43332893888</tel>
         </owner>
         <appointment priority="vysoká">
-            <disease>Podezření na toxoplazmu</disease>
-            <day>2019-12-16</day>
-            <time>11:00:00</time>
-            <duration unit="min">30</duration>
+            <surgery difficulty="střední">Kastrace</surgery>
+            <day>2020-01-03</day>
+            <time>08:30:00</time>
+            <duration unit="hod">1</duration>
         </appointment>
     </reservation>
-    
-<!--    test -->
+
     <reservation day="wed">
         <animal>
             <identifier internal="psmj01"></identifier>
@@ -98,6 +172,11 @@
                     <active-ingredient>defanol chlorin</active-ingredient>
                     <manufacturer>Zentiva</manufacturer>
                     <dose unit="mg">25</dose>
+                </medication>
+                <medication active-use="true">
+                    <active-ingredient>paxenatol</active-ingredient>
+                    <manufacturer>Biofarm</manufacturer>
+                    <dose unit="mg">10</dose>
                 </medication>
             </medical>
         </animal>
@@ -163,41 +242,36 @@
     
     <reservation day="tue">
         <animal>
-            <identifier internal="kpmj01"></identifier>
-            <species>kočka</species>
-            <breed>Perská kočka</breed>
-            <sex>samice</sex>
-            <age>4</age>
-            <name>Micka</name>
-            <medical condition="true">
-                <weight unit="kg">6.3</weight>
+            <identifier internal="pljj01"></identifier>
+            <species>pes</species>
+            <breed>Labrador</breed>
+            <sex>samec</sex>
+            <age>2</age>
+            <name>Joe</name>
+            <medical condition="false">
+                <weight unit="kg">15.3</weight>
                 <notes>
-                    <p>Březí 4 týdny, luxace pately z. dex. končetina, pohyb zvládá</p>
+                    <p>Zdravý, bez problémů, bez označení</p>
                 </notes>
-                <medication active-use="true">
-                    <active-ingredient>diclofenaceum natricum</active-ingredient>
-                    <manufacturer>Zentiva</manufacturer>
-                    <dose unit="mg">25</dose>
-                </medication>
             </medical>
         </animal>
         <owner>
-            <email>kolar.jan@centrum.cz</email>
-            <name>Jan Kolář</name>
+            <email>rizekj@centrum.cz</email>
+            <name>Jan Řízek</name>
             <address>
-                <street>Krajinská</street>
-                <streetNum>270/30</streetNum>
-                <city>České Budějovice</city>
-                <zip>37001</zip>
+                <street>Kolmá</street>
+                <streetNum>2144/07</streetNum>
+                <city>Pelhřimov</city>
+                <zip>39301</zip>
                 <country>Česká republika</country>
             </address>
-            <tel>+420777322229</tel>
+            <tel>+420603992872</tel>
         </owner>
-        <appointment priority="vysoká">
-            <disease>Podezření na toxoplazmu</disease>
+        <appointment priority="normální">
+            <other>Očipování</other>
             <day>2019-12-17</day>
-            <time>11:00:00</time>
-            <duration unit="min">30</duration>
+            <time>10:15:00</time>
+            <duration unit="min">10</duration>
         </appointment>
     </reservation>
     

@@ -47,7 +47,7 @@
     <xsl:template match="reservation-list" mode="list">
         <fo:block id="start" text-align="center" font-size="10mm" font-weight="bold"
             margin-bottom="15mm">Přehled rezervací v jednotlivých dnech</fo:block>
-        <fo:table border="solid">
+        <fo:table border="solid" margin-bottom="1cm">
             <fo:table-header>
                 <fo:table-row border-bottom="solid">
                     <fo:table-cell>
@@ -105,6 +105,11 @@
                 </xsl:for-each-group>
             </fo:table-body>
         </fo:table>
+
+        <fo:block text-align="center">
+            <fo:external-graphic src="url(/Users/Hynek/Desktop/XMLSemestralka/src/img/logo.jpg)"
+                content-width="5cm" width="40%" text-align="center" display-align="center"/>
+        </fo:block>
     </xsl:template>
 
     <xsl:template match="reservation-list" mode="reservation">
@@ -342,8 +347,11 @@
                             <fo:block text-align="center">
                                 <xsl:choose>
                                     <xsl:when test="medical/medication/active-ingredient">
-                                        <xsl:value-of select="medical/medication/active-ingredient"
-                                        />
+                                        <xsl:for-each select="medical/medication/active-ingredient">
+                                            <fo:block>
+                                                <xsl:value-of select="."/>
+                                            </fo:block>
+                                        </xsl:for-each>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text> - </xsl:text>
@@ -355,9 +363,13 @@
                             <fo:block text-align="center">
                                 <xsl:choose>
                                     <xsl:when test="medical/medication/dose">
-                                        <xsl:value-of select="medical/medication/dose"/>
-                                        <xsl:text> </xsl:text>
-                                        <xsl:value-of select="medical/medication/dose/@unit"/>
+                                        <xsl:for-each select="medical/medication/dose">
+                                            <fo:block>
+                                                <xsl:value-of select="."/>
+                                                <xsl:text> </xsl:text>
+                                                <xsl:value-of select="./@unit"/>
+                                            </fo:block>
+                                        </xsl:for-each>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:text> - </xsl:text>
