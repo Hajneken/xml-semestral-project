@@ -8,6 +8,10 @@ Solution for easy visual overview of veterinary reservations, medical informatio
 
 Based on incoming data in XML format, specified and validated by *XML schema*, app transforms XML to styled HTML pages using *XSLT* and styled PDF document generated with *XSL-FO*.
 
+example XML:
+
+![Demo](demo/demo.svg)
+
 ## Generated page types
 * reservation overview for a time interval 
 * reservation list for a day
