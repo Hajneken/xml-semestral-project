@@ -1,4 +1,4 @@
-# Veterinary appointment booking registry 🐕🐈
+# 🐈 🐶 Veterinary appointment booking registry 🐕 🐢
 
 Solution for easy visual overview of veterinary reservations, medical information and owner profiles. Built only with XML based technologies.
 
@@ -23,6 +23,6 @@ Documentation includes:
 * Notable code constrcuts
 * Technology description
   * XML
-  * XML SChema
+  * XML Schema
   * XSLT
   * XSL-FO
