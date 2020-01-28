@@ -2,6 +2,8 @@
 
 Solution for easy visual overview of veterinary reservations, medical information and owner profiles. Built only with XML based technologies.
 
+![Demo](demo/demo.gif)
+
 ## How it works
 
 Based on incoming data in XML format, specified and validated by *XML schema*, app transforms XML to styled HTML pages using *XSLT* and styled PDF document generated with *XSL-FO*.
