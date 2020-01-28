@@ -10,7 +10,7 @@ Based on incoming data in XML format, specified and validated by *XML schema*, a
 
 example XML:
 
-![Demo](demo/demo.svg)
+![Demo](demo/demoCode.png)
 
 ## Generated page types
 * reservation overview for a time interval 
